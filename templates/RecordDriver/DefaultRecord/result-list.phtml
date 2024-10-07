@@ -34,7 +34,7 @@
           <?php $summAuthors = $this->driver->getPrimaryAuthorsWithHighlighting(); ?>
           <?php if (!empty($summAuthors)): ?>
             <span class="authors">
-              <?=$this->transEsc('by')?>
+              <?=$this->transEsc('Author')?>
               <?php $authorCount = count($summAuthors); ?>
               <?php foreach ($summAuthors as $i => $summAuthor): ?>
                 <a href="<?=$this->record($this->driver)->getLink('author', $this->highlight($summAuthor, null, true, false))?>" class="result-author"><?=$this->highlight(rtrim($summAuthor, ','))?></a><?=$i + 1 < $authorCount ? ',' : ''?>
@@ -43,7 +43,7 @@
           <?php endif; ?>
         <?php endif; ?>
       </h2>
-      <div>
+      <div class="result-date">
         <?php if ($this->driver->isCollection()): ?>
           <?=implode('<br>', array_map([$this, 'escapeHtml'], $this->driver->getSummary())); ?>
         <?php else: ?>
@@ -196,10 +196,12 @@
       <?php if ($this->userlist()->getMode() !== 'disabled'): ?>
         <?php if ($this->permission()->allowDisplay('feature.Favorites')): ?>
           <?php /* Add to favorites */ ?>
-          <a href="<?=$this->escapeHtmlAttr($recordLinker->getActionUrl($this->driver, 'Save'))?>" data-lightbox class="save-record result-link icon-link" data-id="<?=$this->escapeHtmlAttr($this->driver->getUniqueId()) ?>">
-            <?=$this->icon('user-favorites', 'icon-link__icon') ?>
-            <span class="result-link-label icon-link__label"><?=$this->transEsc('Add to favorites')?></span>
-          </a><br>
+          <a href="<?=$this->escapeHtmlAttr($recordLinker->getActionUrl($this->driver, 'Save'))?>" data-lightbox class="save-record result-link icon-link favorite-link" data-id="<?=$this->escapeHtmlAttr($this->driver->getUniqueId()) ?>">
+            <span class="icon-container">
+                <?=$this->icon('user-favorites', 'icon-link__icon') ?>
+            </span>
+            <span class="result-link-label icon-link__label"></span>
+        </a><br>
         <?php elseif ($block = $this->permission()->getAlternateContent('feature.Favorites')): ?>
           <?=$block?>
         <?php endif; ?>

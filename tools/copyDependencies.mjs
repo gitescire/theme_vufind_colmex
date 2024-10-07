@@ -1,27 +1,6 @@
-import { cp } from 'node:fs/promises';
 import { copyFile } from 'node:fs/promises';
 
-let buildDepsOnly = false;
-process.argv.forEach(arg => {
-    if (arg === '--only-build-deps') {
-        buildDepsOnly = true;
-    }
-});
-
 console.log('Copying dependencies...');
-
-// Bootstrap 5
-await cp('node_modules/bootstrap/scss/.', 'scss/vendor/bootstrap/', { recursive: true });
-
-if (buildDepsOnly) {
-    console.log('Done copying build dependencies.');
-    process.exit();
-}
-
-await copyFile('node_modules/bootstrap/dist/js/bootstrap.min.js', 'js/vendor/bootstrap.min.js');
-
-// Popper (Bootstrap 5 dependency)
-await copyFile('node_modules/@popperjs/core/dist/umd/popper.min.js', 'js/vendor/popper.min.js');
 
 // autocomplete.js
 await copyFile('node_modules/autocomplete.js/autocomplete.js', 'js/vendor/autocomplete.js');

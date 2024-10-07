@@ -45,7 +45,7 @@
     <?php if (count($channel['relatedTokens'] ?? []) > 0): ?>
       <div class="channel-add-menu hidden" data-group="<?=$this->escapeHtmlAttr($groupId) ?>">
         <button type="button" class="add-btn btn btn-link"><?=$this->transEsc('channel_add_more') ?></button><!--
-     --><button type="button" class="btn btn-link dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-label="<?=$this->transEscAttr('toggle_dropdown') ?>">
+     --><button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-label="<?=$this->transEscAttr('toggle_dropdown') ?>">
           <span class="caret"></span>
         </button>
         <ul class="dropdown-menu">

@@ -1,4 +1,4 @@
-/*global VuFind, bootstrap */
+/*global VuFind */
 /*exported cartFormHandler */
 
 VuFind.register('cart', function Cart() {
@@ -8,9 +8,6 @@ VuFind.register('cart', function Cart() {
   var _COOKIE_DOMAIN = false;
   var _COOKIE_PATH = '/';
   var _COOKIE_SAMESITE = 'Lax';
-
-  var _popover = null;
-  var _popoverTimeout = false;
 
   function setDomain(domain) {
     _COOKIE_DOMAIN = domain;
@@ -159,33 +156,13 @@ VuFind.register('cart', function Cart() {
     return false;
   }
 
-  function _showPopover(el, msg) {
-    if (_popoverTimeout !== false) {
-      clearTimeout(_popoverTimeout);
-    }
-    if (_popover) {
-      _popover.hide();
-    }
-    _popover = new bootstrap.Popover(el, {
-      title: VuFind.translate('bookbag'),
-      content: msg,
-      html: true,
-      trigger: 'manual',
-      placement: $(document.body).hasClass('rtl') ? 'left' : 'right'
-    });
-    _popover.show();
-
-    _popoverTimeout = setTimeout(function notificationHide() {
-      _popover.hide();
-      _popover = null;
-    }, 5000);
-  }
-
+  var _cartNotificationTimeout = false;
   function _registerUpdate(_form) {
     var $form = typeof _form === 'undefined'
       ? $('form[name="bulkActionForm"]')
       : $(_form);
     $("#updateCart, #bottom_updateCart").off("click").on("click", function cartUpdate() {
+      var elId = this.id;
       var selected = VuFind.listItemSelection.getAllSelected($form[0]);
       if (selected.length > 0) {
         var orig = getFullItems();
@@ -217,12 +194,18 @@ VuFind.register('cart', function Cart() {
         } else {
           msg = msgs.pop();
         }
-        _showPopover(this, msg);
+        $('#' + elId).data('bs.popover').options.content = msg;
         $('#cartItems strong').html(updated.length);
       } else {
-        _showPopover(this, VuFind.translate('bulk_noitems_advice'));
+        $('#' + elId).data('bs.popover').options.content = VuFind.translate('bulk_noitems_advice');
       }
-
+      $('#' + elId).popover('show');
+      if (_cartNotificationTimeout !== false) {
+        clearTimeout(_cartNotificationTimeout);
+      }
+      _cartNotificationTimeout = setTimeout(function notificationHide() {
+        $('#' + elId).popover('hide');
+      }, 5000);
       return false;
     });
   }
@@ -242,7 +225,13 @@ VuFind.register('cart', function Cart() {
             $this.find('.cart-add').addClass('hidden');
             $this.find('.cart-remove').removeClass('hidden').trigger('focus');
           } else {
-            _showPopover(this, VuFind.translate('bookbagFull'));
+            $this.popover({
+              title: VuFind.translate('bookbag'),
+              content: VuFind.translate('bookbagFull')
+            });
+            setTimeout(function recordCartFullHide() {
+              $this.popover('hide');
+            }, 5000);
           }
         });
         $this.find('.cart-remove').on('click', function cartRemoveClick(e) {
@@ -264,6 +253,13 @@ VuFind.register('cart', function Cart() {
     registerToggles();
     // Search results
     _registerUpdate();
+    $("#updateCart, #bottom_updateCart").popover({
+      title: VuFind.translate('bookbag'),
+      content: '',
+      html: true,
+      trigger: 'manual',
+      placement: $(document.body).hasClass('rtl') ? 'left' : 'right'
+    });
     updateCount();
     VuFind.listen('results-init', updateContainer);
   }

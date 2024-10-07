@@ -20,5 +20,5 @@
     <?=$this->inlineScript(\Laminas\View\Helper\HeadScript::SCRIPT, '$("#searchForm_lookfor").focus();', 'SET'); ?>
   <?=$this->slot('search-home-hero')->end() ?>
 </div>
+<?=$this->render('search/counter.phtml', ['ignoreHiddenFilterMemory' => true]);?>
 
-<?=implode('', array_map([$this, 'contentBlock'], $blocks ?? []))?>

@@ -1,9 +1,35 @@
 <?php $account = $this->auth()->getManager(); ?>
+<div class="secondary-menu">
+  <div class="container">
+    <a href="https://www.facebook.com/universidadmaderopuebla" target="_blank">
+      <img src="<?=$this->imageLink('public/fb.png')?>" alt="" srcset="">
+    </a>
+    <a href="https://x.com/umadpuebla" target="_blank">
+      <img src="<?=$this->imageLink('public/x.png')?>" alt="" srcset="">
+    </a>
+    <a href="https://www.linkedin.com/school/universidad-madero/" target="_blank">
+      <img src="<?=$this->imageLink('public/Lin.png')?>" alt="" srcset="">
+    </a>
+    <a href="https://www.instagram.com/umadpuebla/?igshid=YWJhMjlhZTc%3D" target="_blank">
+      <img src="<?=$this->imageLink('public/Insta.png')?>" alt="" srcset="">
+    </a>
+    <a href="https://www.tiktok.com/@umadpuebla" target="_blank">
+      <img src="<?=$this->imageLink('public/TikTok.png')?>" alt="" srcset="">
+    </a>
+  </div>
+</div>
 <div class="banner container navbar">
-  <a class="navbar-brand lang-<?=$this->layout()->userLang ?>" href="<?=$this->url('home')?>">VuFind</a>
-  <button type="button" class="navbar-toggle" data-bs-toggle="collapse" data-bs-target="#header-collapse" aria-label="<?=$this->transEscAttr('mobile_toggle_navigation_text')?>">
-    <?=$this->icon('ui-menu') ?>
-  </button>
+  <div class="col-md-4">
+    <a class=" lang-<?=$this->layout()->userLang ?>" href="<?=$this->url('home')?>">
+      <img src="<?=$this->imageLink('public/logo_umad.png')?>" alt="UMAD">
+    </a>
+  </div>
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#header-collapse" aria-label="<?=$this->transEscAttr('mobile_toggle_navigation_text')?>">
+      <?=$this->icon('ui-menu') ?>
+    </button>
+
+  </div>
   <?php if (!isset($this->layout()->renderingError)): ?>
     <div class="collapse navbar-collapse" id="header-collapse">
       <nav>
@@ -29,17 +55,29 @@
               </a>
             </li>
           <?php endif; ?>
+          <li>
+          <a class="lang-<?=$this->layout()->userLang ?>" href="<?=$this->url('home')?>">
+           <img src="<?=$this->imageLink('public/CA.png')?>" alt="Icon" class="icon-left" />
+           <?=$this->transEsc('Home')?>
+           </a>
+          </li>          
+          <li>
+          <a href="<?=$this->url('content-page', ['page' => 'contacto']) ?>"> 
+          <img src="<?=$this->imageLink('public/Icon material-message.png')?>" alt="Icon" class="icon-left" /> 
+              <?=$this->transEsc('Contact')?>
+            </a>
+          </li>
           <?php if (is_object($account) && $account->loginEnabled()): // hide login/logout if unavailable ?>
             <?php if ($account->getIdentity()): ?>
               <li class="logoutOptions<?php if ($account->dropdownEnabled()): ?> with-dropdown<?php endif ?>">
                 <a href="<?=$this->url('myresearch-home', [], ['query' => ['redirect' => 0]])?>" class="icon-link">
-                  <span id="account-icon" class="icon-link__icon" role="link"><?=$this->icon('my-account') ?></span>
+                  <span id="account-icon" class="icon-link__icon"><?=$this->icon('my-account') ?></span>
                   <span class="icon-link__label"><?=$this->transEsc('Your Account')?></span>
                 </a>
               </li>
               <?php if ($account->dropdownEnabled()): ?>
                 <li id="login-dropdown" class="dropdown hidden-xs">
-                  <a href="#" data-bs-toggle="dropdown"><?=$this->icon('dropdown-caret') ?></a>
+                  <a href="#" data-toggle="dropdown"><?=$this->icon('dropdown-caret') ?></a>
                   <div class="dropdown-menu">
                     <?=$this->accountMenu()->render('', 'header_')?>
                   </div>
@@ -69,7 +107,8 @@
           <?php endif; ?>
 
           <?php if (isset($this->layout()->themeOptions) && count($this->layout()->themeOptions) > 1): ?>
-              <?=$this->component('menu-button', [
+             
+             <?=$this->component('menu-button', [
                   'toggleLabel' => 'Theme',
                   'wrapperClass' => 'theme-selector',
                   'wrapperTag' => 'li',
@@ -84,25 +123,26 @@
                   ),
               ]) ?>
           <?php endif; ?>
-
-          <?php if (isset($this->layout()->allLangs) && count($this->layout()->allLangs) > 1): ?>
-              <?=$this->component('menu-button', [
-                  'toggleLabel' => 'Language',
-                  'wrapperClass' => 'language',
-                  'wrapperTag' => 'li',
-                  'menuItems' => array_map(
-                      function ($langCode, $langName) {
-                          return [
-                            'label' => $this->displayLanguageOption($langName),
-                            'url' => $this->url()->addQueryParameters(['lng' => $langCode]),
-                            'selected' => $this->layout()->userLang == $langCode,
-                          ];
-                      },
-                      array_keys($this->layout()->allLangs),
-                      array_values($this->layout()->allLangs),
-                  ),
-              ]) ?>
-          <?php endif; ?>
+          
+        <?php if (isset($this->layout()->allLangs) && count($this->layout()->allLangs) > 1): ?>
+    <?=$this->component('menu-button', [
+        'toggleLabel' => 'Language',
+        'imageSrc' => $this->imageLink('public/Idioma UMAD.png'),
+        'wrapperClass' => 'language',
+        'wrapperTag' => 'li',
+        'menuItems' => array_map(
+            function ($langCode, $langName) {
+                return [
+                    'label' => $this->displayLanguageOption($langName),
+                    'url' => $this->url()->addQueryParameters(['lng' => $langCode]),
+                    'selected' => $this->layout()->userLang == $langCode,
+                ];
+            },
+            array_keys($this->layout()->allLangs),
+            array_values($this->layout()->allLangs)
+        ),
+    ]) ?>
+<?php endif; ?>
         </ul>
       </nav>
     </div>
@@ -110,7 +150,7 @@
 </div>
 <?php if ($this->layout()->searchbox !== false): ?>
   <div class="search container navbar">
-    <div class="nav searchbox hidden-print" role="search">
+    <div class="nav-search searchbox hidden-print" role="search">
       <?=$this->layout()->searchbox ?>
     </div>
   </div>

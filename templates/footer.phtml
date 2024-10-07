@@ -1,41 +1,68 @@
 <footer class="hidden-print">
-  <div class="footer-container">
-    <div class="footer-column">
-      <?php $this->slot('footer-left')->start(); ?>
-        <h2><?=$this->transEsc('footer_header_search_options')?></h2>
-        <ul>
-          <li><a href="<?=$this->url('search-history')?>"><?=$this->transEsc('Search History')?></a></li>
-          <li><a href="<?=$this->url('search-advanced')?>"><?=$this->transEsc('Advanced Search')?></a></li>
-        </ul>
-      <?=$this->slot('footer-left')->end(); ?>
+  <div class="container">
+    <div class="col-md-6">
+      <span class="info">Sistema Educativo madero</span>
+      <div class="col-md-12">
+        <img src="<?=$this->imageLink('public/logo1.png')?>" alt="Logo">
+      </div>
+      <div class="col-md-12">
+        <img src="<?=$this->imageLink('public/logo2.png')?>" alt="Logo">
+      </div>
+      <div class="col-md-12">
+        <img src="<?=$this->imageLink('public/logo3.png')?>" alt="Logo">
+      </div>
+      <div class="col-md-12">
+        <img src="<?=$this->imageLink('public/logo4.png')?>" alt="Logo">
+      </div>
+      <div class="col-md-12">
+        <img src="<?=$this->imageLink('public/logo5.png')?>" alt="Logo">
+      </div>
     </div>
-    <div class="footer-column">
-      <?php $this->slot('footer-center')->start(); ?>
-        <h2><?=$this->transEsc('footer_header_find_more')?></h2>
-        <ul>
-          <li><a href="<?=$this->url('browse-home')?>"><?=$this->transEsc('Browse the Catalog')?></a></li>
-          <li><a href="<?=$this->url('alphabrowse-home')?>"><?=$this->transEsc('Browse Alphabetically')?></a></li>
-          <li><a href="<?=$this->url('channels-home')?>"><?=$this->transEsc('channel_explore')?></a></li>
-          <li><a href="<?=$this->url('search-reserves')?>"><?=$this->transEsc('Course Reserves')?></a></li>
-          <li><a href="<?=$this->url('search-newitem')?>"><?=$this->transEsc('New Items')?></a></li>
-        </ul>
-      <?=$this->slot('footer-center')->end(); ?>
+    <div class="col-md-6 contact">
+      <p>Contacto</p>
+      <div class="col-md-12">
+        <span class="strong">Dirección:</span>
+        <span>Camino Real a Cholula 4212</span> </br>
+        <span>Col. Exhacienda La Concepción Buenavista</span> </br>
+        <span>C.P.72150, Puebla, México</span>
+      </div>
+      <div class="col-md-12">
+        <span class="strong">Teléfono:</span>
+        <span>(+52) 222 141 5959</span> </br>
+        <span>(+52) 222 141 5962</span> </br>
+      </div>
+      <div class="col-md-12">
+        <span class="strong">Email:</span>
+        <span>dulcevc@umad.edu.mx</span> 
+      </div>
+
+      
     </div>
-    <div class="footer-column">
-      <?php $this->slot('footer-right')->start(); ?>
-        <h2><?=$this->transEsc('footer_header_need_help')?></h2>
-        <ul>
-          <li><a href="<?=$this->url('help-home')?>?topic=search&amp;_=<?=time() ?>" data-lightbox class="help-link"><?=$this->transEsc('Search Tips')?></a></li>
-          <li><a href="<?=$this->url('content-page', ['page' => 'asklibrary']) ?>"><?=$this->transEsc('Ask a Librarian')?></a></li>
-          <li><a href="<?=$this->url('content-page', ['page' => 'faq']) ?>"><?=$this->transEsc('FAQs')?></a></li>
-          <?php if ($this->cookieConsent()->isEnabled()): ?>
-            <li><a href="#" data-cc="show-preferencesModal" aria-haspopup="dialog"><?=$this->transEsc('Cookie Settings')?></a></li>
-          <?php endif; ?>
-        </ul>
-      <?=$this->slot('footer-right')->end(); ?>
+    <div class="secondary-menu-footer">
+  <div class="container">
+    <a href="https://www.facebook.com/universidadmaderopuebla" target="_blank">
+      <img src="<?=$this->imageLink('public/fb.png')?>" alt="" srcset="">
+    </a>
+    <a href="https://x.com/umadpuebla" target="_blank">
+      <img src="<?=$this->imageLink('public/x.png')?>" alt="" srcset="">
+    </a>
+    <a href="https://www.linkedin.com/school/universidad-madero/" target="_blank">
+      <img src="<?=$this->imageLink('public/Lin.png')?>" alt="" srcset="">
+    </a>
+    <a href="https://www.instagram.com/umadpuebla/?igshid=YWJhMjlhZTc%3D" target="_blank">
+      <img src="<?=$this->imageLink('public/Insta.png')?>" alt="" srcset="">
+    </a>
+    <a href="https://www.tiktok.com/@umadpuebla" target="_blank">
+      <img src="<?=$this->imageLink('public/TikTok.png')?>" alt="" srcset="">
+    </a>
+  </div>
+  </div>
+ 
+</div>
+  <div class="container">
+    <div class="poweredby">
+      Derechos reservados © 2024 <a href="<?=$this->url('content-page', ['page' => 'privacy']) ?>">Aviso de privacidad</a>
     </div>
   </div>
-  <div class="poweredby">
-    <?=$this->layout()->poweredBy ?>
-  </div>
+
 </footer>

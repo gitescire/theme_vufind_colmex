@@ -1,7 +1,7 @@
 <?php $recommend = $this->recommend->getResults(); ?>
 <?php if (count($recommend) > 0): ?>
   <ul class="list-group random <?=$this->recommend->getDisplayMode()?>">
-    <li class="list-group-item title" data-bs-toggle="collapse" data-bs-target="#side-collapse-randomrecommend">
+    <li class="list-group-item title" data-toggle="collapse" data-target="#side-collapse-randomrecommend">
       <?=$this->transEsc('random_recommendation_title')?>
     </li>
     <div id="side-collapse-randomrecommend" class="collapse in">

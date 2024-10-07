@@ -1,68 +1,29 @@
-$fa-font-path: "../../bootstrap5/css/vendor/font-awesome/webfonts";
+/* #SCSS> */
+$fa-font-path: "../../bootstrap3/css/fonts";
+// Load bootstrap via include path to silence deprecation warnings
+// (see vendor subdirectory for the actual contents)
+@import "bootstrap/bootstrap";
+/* <#SCSS */
+/* #LESS>
+@import "vendor/bootstrap/bootstrap";
 
-// Include Font Awesome
-@import "vendor/font-awesome/fontawesome";
-@import "vendor/font-awesome/regular";
-@import "vendor/font-awesome/solid";
-@import "vendor/font-awesome/v4-shims";
-
-// Include Bootstrap functions first (so you can manipulate colors, SVGs, calc, etc)
-@import "bootstrap/scss/functions";
-
-// Include any variable overrides here
-@import "bootstrap-variable-overrides";
-
-// Include remainder of required Bootstrap stylesheets (including any separate color mode stylesheets)
-@import "bootstrap/scss/variables";
-//@import "bootstrap/scss/variables-dark";
-
-// Include any map overrides here
-@import "bootstrap-map-overrides";
-
-// Include remainder of required parts
-@import "bootstrap/scss/maps";
-@import "bootstrap/scss/mixins";
-@import "bootstrap/scss/root";
-@import "bootstrap/scss/reboot";
-
-// Optionally include any other parts as needed
-@import "bootstrap/scss/accordion";
-@import "bootstrap/scss/alert";
-@import "bootstrap/scss/badge";
-@import "bootstrap/scss/breadcrumb";
-@import "bootstrap/scss/buttons";
-@import "bootstrap/scss/card";
-@import "bootstrap/scss/carousel";
-@import "bootstrap/scss/containers";
-@import "bootstrap/scss/dropdown";
-@import "bootstrap/scss/forms";
-@import "bootstrap/scss/grid";
-@import "bootstrap/scss/helpers";
-@import "bootstrap/scss/images";
-@import "bootstrap/scss/list-group";
-@import "bootstrap/scss/modal";
-@import "bootstrap/scss/nav";
-@import "bootstrap/scss/navbar";
-@import "bootstrap/scss/offcanvas";
-@import "bootstrap/scss/pagination";
-@import "bootstrap/scss/popover";
-@import "bootstrap/scss/tables";
-@import "bootstrap/scss/tooltip";
-@import "bootstrap/scss/transitions";
-@import "bootstrap/scss/type";
-@import "bootstrap/scss/utilities";
-
-// Optionally include utilities API last to generate classes based on the Sass map in `_utilities.scss`
-@import "bootstrap/scss/utilities/api";
-
-// Include variables
+<#LESS */
 @import "variables";
-
-// Include custom (non-vendor) mixins
+// Import custom (non-vendor) mixins
 @import "mixins/mixins";
 
-// Include bootstrap3 compatibility layer
-@import "bs3-compat";
+/* #SCSS> */
+$fa-font-path: "../../bootstrap3/css/fonts";
+// Load font-awesome via include path to silence deprecation warnings
+// (see vendor subdirectory for the actual contents)
+@import "font-awesome/font-awesome";
+/* <#SCSS */
+/* #LESS>
+@import "vendor/font-awesome/font-awesome";
+<#LESS */
+
+@import "../vendor/bootstrap-accessibility/bootstrap-accessibility";
+@import "../vendor/a11y";
 
 @import "components/accessibility";
 @import "components/variables";
@@ -161,7 +122,7 @@ label { cursor: pointer; }
 .navbar-nav button.dropdown-toggle {
   @include button-variant($btn-default-color, $btn-default-bg, $btn-default-border);
   appearance: none;
-  padding: $navbar-padding-y;
+  padding: $navbar-padding-vertical;
   border: 0;
   color: inherit;
   background-color: transparent;
@@ -268,7 +229,7 @@ footer {
 /* ------ Admin ------ */
 .form-admin-maintenance .form-control {
   display: inline-block;
-  width: 8rem;
+  width: 100px;
 }
 
 /* ------ Badges - blend the links in ------ */
@@ -373,7 +334,7 @@ footer {
   text-decoration: none;
   &:hover,
   &:focus {
-    @extend .btn-outline-secondary;
+    @include outline(1px);
     text-decoration: none;
     background-color: $nav-link-hover-bg;
   }
@@ -405,7 +366,7 @@ footer {
     align-items: baseline;
 
     &:hover {
-      background-color: $nav-link-hover-bg;
+      background-color: $gray-lighter;
       outline: dotted 1px #000;
     }
     &:focus {
@@ -720,13 +681,8 @@ div.holding-notes {
 
 /* --- Pagination --- */
 .pagination {
+  display: flex;
   flex: 1 1 100%;
   flex-wrap: wrap;
   justify-content: center;
-  margin: 24px 0;
-}
-
-/* --- Rating --- */
-.rating__icon--star {
-  width: 0.5rem;
 }

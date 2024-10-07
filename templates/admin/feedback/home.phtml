@@ -86,21 +86,21 @@ $this->headTitle($this->translate('VuFind Administration - Feedback Management')
               <span id="shortMessage_<?=$this->escapeHtmlAttr($feedbackEntity->getId())?>" class="collapse in message_<?=$this->escapeHtmlAttr($feedbackEntity->getId())?>"><?=$this->truncate($feedbackEntity->getMessage(), 100, '')?></span>
               <?php if (strlen(($feedbackEntity->getMessage())) > 100): ?>
                 <span id="fullMessage_<?=$this->escapeHtmlAttr($feedbackEntity->getId())?>" class="collapse fullMessage message_<?=$this->escapeHtmlAttr($feedbackEntity->getId())?>"><?=$feedbackEntity->getMessage()?></span>
-                <a id="toggleButton_<?=$this->escapeHtmlAttr($feedbackEntity->getId())?>" data-bs-toggle="collapse" data-bs-target=".message_<?=$this->escapeHtmlAttr($feedbackEntity->getId())?>" aria-controls="fullMessage_<?=$this->escapeHtmlAttr($feedbackEntity->getId())?>" aria-expanded="false" >
+                <a id="toggleButton_<?=$this->escapeHtmlAttr($feedbackEntity->getId())?>" data-toggle="collapse" data-target=".message_<?=$this->escapeHtmlAttr($feedbackEntity->getId())?>" aria-controls="fullMessage_<?=$this->escapeHtmlAttr($feedbackEntity->getId())?>" aria-expanded="false" >
                   <?=$this->transEsc('more_ellipsis')?>
                 </a>
               <?php endif; ?>
             </td>
             <td>
               <?php if (!empty($data)): ?>
-                <a href="#" class="btn btn-default btn-info" data-bs-toggle="modal" data-bs-target="#feedback-<?=$feedbackEntity->getId()?>">
+                <a href="#" class="btn btn-default btn-info" data-toggle="modal" data-target="#feedback-<?=$feedbackEntity->getId()?>">
                   <?=$this->transEsc('Show')?>
                 </a>
                 <div class="modal" id="feedback-<?=$feedbackEntity->getId()?>" tabindex="-1" role="dialog" aria-hidden="true">
                   <div class="modal-dialog">
                     <div class="modal-content">
                       <div class="modal-header">
-                        <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                           <?=$this->icon('lightbox-close', ['aria-label' => $this->translate('Close')])?>
                         </button>
                         <h4 class="modal-title"><?=$this->transEsc('Additional data')?></h4>

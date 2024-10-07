@@ -10,7 +10,7 @@
   $defaultAttrs = [
     'type' => 'button', // Accessible default
     'class' => 'dropdown-toggle', // Bootstrap class
-    'data-bs-toggle' => 'dropdown', // Bootstrap data-attr
+    'data-toggle' => 'dropdown', // Bootstrap data-attr
     'aria-expanded' => 'false',
     'aria-haspopup' => 'true',
   ];
@@ -30,7 +30,7 @@
   <?=$this
       ->makeTag(
           $toggleTag,
-          $this->transEsc($this->toggleLabel) . $this->icon('dropdown-caret'),
+          '<img src="'.$this->escapeHtmlAttr($this->imageSrc).'" class="icon-left" alt="Language Icon" />' . $this->transEsc($this->toggleLabel) . $this->icon('dropdown-caret'),
           $toggleAttrs,
           ['escapeContent' => false]
       )

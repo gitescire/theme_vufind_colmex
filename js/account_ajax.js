@@ -1,4 +1,4 @@
-/*global bootstrap, userIsLoggedIn, VuFind */
+/*global userIsLoggedIn, VuFind */
 VuFind.register('account', function Account() {
   // Retrieved statuses
   var LOADING = -1 * Math.PI; // waiting for request
@@ -81,14 +81,12 @@ VuFind.register('account', function Account() {
     if (accountIconEl) {
       accountIconEl.innerHTML = VuFind.icon(..._accountIcons[accountStatus]);
       if (accountStatus > ICON_LEVELS.NONE) {
-        accountIconEl.dataset.bsToggle = 'tooltip';
-        accountIconEl.dataset.bsPlacement = 'bottom';
+        accountIconEl.dataset.toggle = 'tooltip';
+        accountIconEl.dataset.placement = 'bottom';
         accountIconEl.title = VuFind.translate('account_has_alerts');
-        const tooltip = bootstrap.Tooltip.getOrCreateInstance(accountIconEl);
-        tooltip.show();
+        $(accountIconEl).tooltip();
       } else {
-        const tooltip = bootstrap.Tooltip.getOrCreateInstance(accountIconEl);
-        tooltip.dispose();
+        $(accountIconEl).tooltip('destroy');
       }
       Object.entries(ICON_LEVELS).forEach(([, level]) => {
         accountIconEl.classList.remove('notification-level-' + level);

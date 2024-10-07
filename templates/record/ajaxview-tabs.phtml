@@ -9,7 +9,7 @@
   <?php $coreMetadata = trim($this->record($this->driver)->getCoreMetadata()); ?>
   <?php if (!empty($coreMetadata)): ?>
     <li<?php if ($this->defaultTab === 'information'): ?> class="active"<?php endif; ?>>
-      <a id="information_<?=$idSuffixEsc?>" class="list-tab-toggle loaded" data-bs-toggle="tab" data-bs-target="#information_<?=$idSuffixEsc?>-content" class="noajax">
+      <a id="information_<?=$idSuffixEsc?>" class="list-tab-toggle loaded" data-toggle="tab" data-target="#information_<?=$idSuffixEsc?>-content" class="noajax">
         <?=$this->translate('ajaxview_label_information') ?>
       </a>
     </li>
@@ -18,7 +18,7 @@
   <?php $toolbar = trim($this->record($this->driver)->getToolbar()); ?>
   <?php if (!empty($toolbar)): ?>
     <li<?php if ($this->defaultTab === 'tools'): ?> class="active"<?php endif; ?>>
-      <a id="tools_<?=$idSuffixEsc?>" class="list-tab-toggle loaded" data-bs-toggle="tab" data-bs-target="#tools_<?=$idSuffixEsc?>-content" class="noajax">
+      <a id="tools_<?=$idSuffixEsc?>" class="list-tab-toggle loaded" data-toggle="tab" data-target="#tools_<?=$idSuffixEsc?>-content" class="noajax">
       <?=$this->translate('ajaxview_label_tools') ?>
       </a>
     </li>
@@ -27,7 +27,7 @@
   <?php $list = $this->related()->getList($this->driver); ?>
   <?php if (!empty($list)): ?>
     <li<?php if ($this->defaultTab === 'related'): ?> class="active"<?php endif; ?>>
-      <a id="related_<?=$idSuffixEsc?>" class="list-tab-toggle loaded" data-bs-toggle="tab" data-bs-target="#related_<?=$idSuffixEsc?>-content" class="noajax">
+      <a id="related_<?=$idSuffixEsc?>" class="list-tab-toggle loaded" data-toggle="tab" data-target="#related_<?=$idSuffixEsc?>-content" class="noajax">
         <?=$this->transEsc('Related Items')?>
       </a>
     </li>
@@ -50,7 +50,7 @@
       }
     ?>
     <li<?=count($tab_classes) > 0 ? ' class="' . implode(' ', $tab_classes) . '"' : ''?>>
-      <a id="<?=$this->escapeHtmlAttr(strtolower($tab))?>_<?=$idSuffixEsc?>" class="list-tab-toggle" href="<?=$this->escapeHtmlAttr($this->recordLinker()->getTabUrl($this->driver, $tab))?>#tabnav" data-bs-toggle="tab" data-bs-target="#<?=strtolower($tab)?>_<?=$idSuffixEsc?>-content"<?php if ($obj->supportsAjax() && in_array($tab, $this->backgroundTabs)):?> data-background<?php endif ?>><?=$this->transEsc($desc)?></a>
+      <a id="<?=$this->escapeHtmlAttr(strtolower($tab))?>_<?=$idSuffixEsc?>" class="list-tab-toggle" href="<?=$this->escapeHtmlAttr($this->recordLinker()->getTabUrl($this->driver, $tab))?>#tabnav" data-toggle="tab" data-target="#<?=strtolower($tab)?>_<?=$idSuffixEsc?>-content"<?php if ($obj->supportsAjax() && in_array($tab, $this->backgroundTabs)):?> data-background<?php endif ?>><?=$this->transEsc($desc)?></a>
     </li>
   <?php endforeach; ?>
 </ul>

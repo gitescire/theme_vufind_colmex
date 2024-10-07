@@ -2,18 +2,20 @@
 <?php $similarRecords = $this->tab->getResults(); ?>
 <?php if (!empty($similarRecords)): ?>
   <?php $perPage = 4 ?>
-  <div id="similar-items-carousel" class="carousel slide" data-bs-ride="carousel">
+  <div id="similar-items-carousel" class="carousel slide" data-ride="carousel">
     <!-- Indicators -->
-    <div class="carousel-indicators">
-      <?php for ($i = 0; $i < count($similarRecords) / $perPage; $i++): ?>
-        <button type="button"<?=0 === $i ? ' class="active"' : ''?> data-bs-target="#similar-items-carousel" data-bs-slide-to="<?=$i ?>" aria-label="<?=$this->transEscAttr('page_num', ['%%page%%' => $i + 1])?>"></button>
+    <ol class="carousel-indicators">
+      <li data-target="#similar-items-carousel" data-slide-to="0" class="active"></li>
+      <?php for($i = 1;$i < count($similarRecords) / $perPage;$i++): ?>
+        <li data-target="#similar-items-carousel" data-slide-to="<?=$i ?>"></li>
       <?php endfor; ?>
-    </div>
+    </ol>
 
     <!-- Wrapper for slides -->
     <div class="carousel-inner">
-      <div class="carousel-item active">
+      <div class="item active">
         <?php foreach ($similarRecords as $index => $data): ?>
+          <div class="carousel-item">
             <a class="hover-overlay record-cover-link" href="<?=$this->escapeHtmlAttr($this->recordLinker()->getUrl($data))?>">
               <?=$this->record($data)->getCoverDetails('similar-items', 'large')['html']?>
               <div class="content">
@@ -36,23 +38,24 @@
                 <?php endif; ?>
               </div>
             </a>
+          </div>
           <?php if (($index + 1) % $perPage == 0 && $index < count($similarRecords) - 1): ?>
       </div>
-      <div class="carousel-item">
+      <div class="item">
           <?php endif; ?>
         <?php endforeach; ?>
       </div>
     </div>
 
     <!-- Controls -->
-    <button class="carousel-control-prev" type="button" data-bs-target="#similar-items-carousel" data-bs-slide="prev">
+    <a class="left carousel-control" href="#similar-items-carousel" role="button" data-slide="prev">
       <?=$this->icon('page-prev') ?>
-      <span class="visually-hidden"><?=$this->transEscAttr('Prev') ?></span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#similar-items-carousel" data-bs-slide="next">
-      <span class="visually-hidden"><?=$this->transEscAttr('Next') ?></span>
+      <span class="sr-only"><?=$this->transEscAttr('Prev') ?></span>
+    </a>
+    <a class="right carousel-control" href="#similar-items-carousel" role="button" data-slide="next">
+      <span class="sr-only"><?=$this->transEscAttr('Next') ?></span>
       <?=$this->icon('page-next') ?>
-    </button>
+    </a>
   </div>
 <?php else: ?>
   <p><?=$this->transEsc('Cannot find similar records')?></p>

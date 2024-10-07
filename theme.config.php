@@ -2,6 +2,8 @@
 return [
     'extends' => 'root',
     'css' => [
+        //'vendor/bootstrap.min.css',
+        //'vendor/bootstrap-accessibility.css',
         'compiled.css',
         'print.css:print',
     ],
@@ -33,8 +35,8 @@ return [
          *   ['file' => 'example.js', 'conditional' => 'lt IE 10']
          */
         ['file' => 'vendor/jquery.min.js', 'priority' => 110],
-        ['file' => 'vendor/popper.min.js', 'priority' => 120],
-        ['file' => 'vendor/bootstrap.min.js', 'priority' => 130],
+        ['file' => 'vendor/bootstrap.min.js', 'priority' => 120],
+        ['file' => 'vendor/bootstrap-accessibility.min.js', 'priority' => 130],
         ['file' => 'vendor/validator.min.js', 'priority' => 140],
         ['file' => 'vendor/autocomplete.js', 'priority' => 220],
         ['file' => 'lib/ajax_request_queue.js', 'priority' => 230],
@@ -47,7 +49,6 @@ return [
         ['file' => 'observer_manager.js', 'priority' => 370],
         ['file' => 'openurl.js', 'priority' => 380],
         ['file' => 'list_item_selection.js', 'priority' => 390],
-        ['file' => 'bs3-compat.js', 'priority' => 1000],
     ],
     /**
      * Configuration for a single or multiple favicons.
@@ -73,23 +74,23 @@ return [
      *      ],
      *  ]
      */
-    'favicon' => 'vufind-favicon.ico',
+    'favicon' => 'public/UMAD.ico',
     'helpers' => [
         'factories' => [
-            'VuFind\View\Helper\Bootstrap5\BulkAction' => 'VuFind\View\Helper\Root\BulkActionFactory',
-            'VuFind\View\Helper\Bootstrap5\CopyToClipboardButton' => 'Laminas\ServiceManager\Factory\InvokableFactory',
-            'VuFind\View\Helper\Bootstrap5\Flashmessages' => 'VuFind\View\Helper\Root\FlashmessagesFactory',
-            'VuFind\View\Helper\Bootstrap5\Highlight' => 'Laminas\ServiceManager\Factory\InvokableFactory',
-            'VuFind\View\Helper\Bootstrap5\LayoutClass' => 'VuFind\View\Helper\Bootstrap5\LayoutClassFactory',
-            'VuFind\View\Helper\Bootstrap5\Search' => 'Laminas\ServiceManager\Factory\InvokableFactory',
+            'VuFind\View\Helper\Bootstrap3\BulkAction' => 'VuFind\View\Helper\Root\BulkActionFactory',
+            'VuFind\View\Helper\Bootstrap3\CopyToClipboardButton' => 'Laminas\ServiceManager\Factory\InvokableFactory',
+            'VuFind\View\Helper\Bootstrap3\Flashmessages' => 'VuFind\View\Helper\Root\FlashmessagesFactory',
+            'VuFind\View\Helper\Bootstrap3\Highlight' => 'Laminas\ServiceManager\Factory\InvokableFactory',
+            'VuFind\View\Helper\Bootstrap3\LayoutClass' => 'VuFind\View\Helper\Bootstrap3\LayoutClassFactory',
+            'VuFind\View\Helper\Bootstrap3\Search' => 'Laminas\ServiceManager\Factory\InvokableFactory',
         ],
         'aliases' => [
-            'bulkAction' => 'VuFind\View\Helper\Bootstrap5\BulkAction',
-            'copyToClipboardButton' => 'VuFind\View\Helper\Bootstrap5\CopyToClipboardButton',
-            'flashmessages' => 'VuFind\View\Helper\Bootstrap5\Flashmessages',
-            'highlight' => 'VuFind\View\Helper\Bootstrap5\Highlight',
-            'layoutClass' => 'VuFind\View\Helper\Bootstrap5\LayoutClass',
-            'search' => 'VuFind\View\Helper\Bootstrap5\Search',
+            'bulkAction' => 'VuFind\View\Helper\Bootstrap3\BulkAction',
+            'copyToClipboardButton' => 'VuFind\View\Helper\Bootstrap3\CopyToClipboardButton',
+            'flashmessages' => 'VuFind\View\Helper\Bootstrap3\Flashmessages',
+            'highlight' => 'VuFind\View\Helper\Bootstrap3\Highlight',
+            'layoutClass' => 'VuFind\View\Helper\Bootstrap3\LayoutClass',
+            'search' => 'VuFind\View\Helper\Bootstrap3\Search',
         ],
     ],
     'icons' => [
