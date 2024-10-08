@@ -30,7 +30,7 @@
   <?=$this
       ->makeTag(
           $toggleTag,
-          '<img src="'.$this->escapeHtmlAttr($this->imageSrc).'" class="icon-left" alt="Language Icon" />' . $this->transEsc($this->toggleLabel) . $this->icon('dropdown-caret'),
+          $this->transEsc($this->toggleLabel) . $this->icon('dropdown-caret'),
           $toggleAttrs,
           ['escapeContent' => false]
       )

@@ -13,14 +13,8 @@ $thumbnail-width-large:  160px !default;
 // record result list ol, ul that contains li.result
 .record-list {
   list-style: none;
-  padding: 15px;
-  background: #fff;
-  margin: 3rem 1rem;
-  border-radius: 0 0 10px 10px;
-  border-bottom: none;
-  padding-top: 1rem;
-  padding-left: 1rem;
-  padding-bottom: 1rem;
+  padding: 0;
+  margin: 0;
 
   &.search-results-solr-auth {
     .media-left, .media-right {
@@ -42,7 +36,6 @@ $thumbnail-width-large:  160px !default;
     padding: 2rem;
     display: flex;
     font-size: 150%;
-    margin: 3.5rem 1;
     align-items: flex-start;
     justify-content: center;
     background-color: rgba(0,0,0,0.2);
@@ -180,9 +173,7 @@ header .container.navbar { margin-bottom: 0; }
 }
 .result {
   display: flex;
-  box-shadow: -20px -20px 20px #ffffff99,20px 15px 20px 0 #00000012;
-  margin-bottom: 3rem;
-
+  padding-top: 1rem;
 
   .record-checkbox,
   .record-number { display: none; }
@@ -226,12 +217,6 @@ header .container.navbar { margin-bottom: 0; }
       display: block;
       flex: 0 2rem;
       text-align: center;
-      background-color: white;
-      height: 5%;
-      border-radius: 25px;
-      border: solid 1px @first_menu_color;
-      color: @first_menu_color;
-      font-weight: bold;
     }
   }
 }
@@ -572,8 +557,8 @@ body.rtl {
   display: flex;
   gap: 1rem;
   align-items: start;
-  margin-block-start: .5rem;
-  
+  margin-block-start: 0.5rem;
+
   .retain-filters {
     float: right;
   }

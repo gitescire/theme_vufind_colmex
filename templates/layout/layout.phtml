@@ -132,13 +132,6 @@
     ?>
     <?=$this->cookieConsent()->render()?>
     <?=$this->headScript() ?>
-    <script type="text/javascript">
-        (function(c,l,a,r,i,t,y){
-            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-        })(window, document, "clarity", "script", "o59efkpwpp");
-    </script>
   </head>
   <body class="template-dir-<?=$this->templateDir?> template-name-<?=$this->templateName?> <?=$this->layoutClass('offcanvas-row')?><?php if ($this->layout()->rtl): ?> rtl<?php endif; ?>">
     <header class="hidden-print">
@@ -160,8 +153,6 @@
         <?=$this->layout()->content ?>
       </div>
     </div>
-    <?=$this->render('search/access-home.phtml')?>
-    <?=$this->render('search/news.phtml')?>
     <?=$this->render('footer.phtml')?>
     <!-- MODAL IN CASE WE NEED ONE -->
     <div id="modal" class="modal fade hidden-print" tabindex="-1" role="dialog" aria-hidden="true">
@@ -174,77 +165,12 @@
         </div>
       </div>
     </div>
-
-    <div id="popup_container" class="popup_container" style="display: none;">
-    <div class="popup_content">
-        <div class="popup_body">
-            <p>
-                Para continuar, necesitamos tu consentimiento para el procesamiento de tus datos personales. Al hacer clic en "Aceptar", aceptas nuestros términos y condiciones del "<a href="<?=$this->url('content-page', ['page' => 'privacy']) ?>" target="_blank">Aviso de Privacidad</a>".   
-                <button id="popup_decline" class="btn popup_decline">Decline</button>
-                <button id="popup_accept" class="btn popup_accept">Accept</button>
-            </p>
-        </div>
-    </div>
-  </div>
     <div class="vufind-offcanvas-overlay" data-toggle="vufind-offcanvas"></div>
     <?=$this->render('Helpers/analytics.phtml')?>
     <?php foreach ($this->captcha()->js() as $jsInclude):?>
       <?=$this->inlineScript(\Laminas\View\Helper\HeadScript::FILE, $jsInclude, 'SET')?>
     <?php endforeach; ?>
+
     <?=$this->footScript() ?>
-
-    <script>
-        const privacyNoticePath = "/Content/privacy";
-
-        function setCookieConsent() {
-            const name = "cookieConsent", value = "accepted", days = 365;
-            let expires = "";
-            console.log("Setting cookie consent");
-            if (days) {
-                const date = new Date();
-                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-                expires = "; expires=" + date.toUTCString();
-            }
-
-            document.cookie = name + "=" + (value || "") + expires + "; path=/";
-        }
-
-        function checkCookieConsentExistence() {
-            const cookieName = "cookieConsent";
-            const cookies = document.cookie.split(';');
-            console.log("Checking cookie existence");
-            for (let i = 0; i < cookies.length; i++) {
-                const cookie = cookies[i].trim();
-
-                if (cookie.indexOf(cookieName + '=') === 0) {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        $(document).ready(function () {
-            const pathname = window.location.pathname;
-
-            // Display the popup when loading the page (only if the page is not the privacy notice and the cookie consent is not present)
-            if (pathname !== privacyNoticePath && !checkCookieConsentExistence()) {
-                $("#popup_container").fadeIn();
-                $("#popup_container").css('display', 'flex');
-            }
-
-            // Close the popup when clicking the accept button and save the cookieConsent.
-            $("#popup_accept").click(function () {
-                $("#popup_container").fadeOut();
-                setCookieConsent();
-            });
-
-            $('#popup_decline').click(function () {
-                $("#popup_container").fadeOut();
-                //TODO: Define action on decline
-                console.log('User declined cookies');
-            });
-        });
-    </script>
   </body>
 </html>

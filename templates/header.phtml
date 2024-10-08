@@ -1,39 +1,48 @@
 <?php $account = $this->auth()->getManager(); ?>
-<div class="secondary-menu">
-  <div class="container">
-    <a href="https://www.facebook.com/universidadmaderopuebla" target="_blank">
-      <img src="<?=$this->imageLink('public/fb.png')?>" alt="" srcset="">
-    </a>
-    <a href="https://x.com/umadpuebla" target="_blank">
-      <img src="<?=$this->imageLink('public/x.png')?>" alt="" srcset="">
-    </a>
-    <a href="https://www.linkedin.com/school/universidad-madero/" target="_blank">
-      <img src="<?=$this->imageLink('public/Lin.png')?>" alt="" srcset="">
-    </a>
-    <a href="https://www.instagram.com/umadpuebla/?igshid=YWJhMjlhZTc%3D" target="_blank">
-      <img src="<?=$this->imageLink('public/Insta.png')?>" alt="" srcset="">
-    </a>
-    <a href="https://www.tiktok.com/@umadpuebla" target="_blank">
-      <img src="<?=$this->imageLink('public/TikTok.png')?>" alt="" srcset="">
-    </a>
-  </div>
+<div class="navbare">
+  <a href="https://www.colmex.mx/" class="fr" target="_blank">Colmex</a>
+  <a href="http://portal.office.com/" class="fr" target="_blank"><img src="<?=$this->imageLink('public/mail.png')?>" alt="Mail">&nbsp;Correo electrónico</a>
+  <a href="http://intranet.colmex.mx/" class="fr" target="_blank"><img src="<?=$this->imageLink('public/intranet.png')?>" alt="Mail">&nbsp;Intranet</a>
+
+<div style="float:right; margin-top: 4px; margin-right: 1em;">
+	<a href="https://www.facebook.com/elcolmex/" target="_blank"><img class="img_net" style="width: 12px !important;" src="<?=$this->imageLink('public/fb.png')?>" alt="Fb vino"></a>&nbsp;
+	<a href="https://twitter.com/ELCOLMEX" target="_blank"><img class="img_net" src="<?=$this->imageLink('public/twitter.png')?>" alt="Twitter vino"></a>&nbsp;
+	<a href="https://www.youtube.com/c/elcolegiodemexicociudaddemexico" target="_blank"><img class="img_net" src="<?=$this->imageLink('public/youtube.png')?>" alt="Youtube vino"></a>&nbsp;
+	<a href="https://itunes.apple.com/mx/institution/el-colegio-de-mexico/id443160573" target="_blank"><img class="img_net" src="<?=$this->imageLink('public/itunes.png')?>" alt="Itunes vino"></a>&nbsp;
+	<a href="https://www.linkedin.com/edu/el-colegio-de-m%C3%A9xico-14986" target="_blank"><img class="img_net" src="<?=$this->imageLink('public/linkedin-vino.png')?>" alt="Linkedin vino"></a>&nbsp;
+	<!--<a href="https://plus.google.com/+ElColegiodeM%C3%A9xico081040" target="_blank"><img class="img_net" src="<?=$this->imageLink('public/google.png')?>" alt="Google vino"></a>&nbsp;-->
+	<a href="https://www.instagram.com/elcolmex/" target="_blank"><img class="img_net" src="<?=$this->imageLink('public/instagram.png')?>" alt="Instagram vino">&nbsp;
+	</a><a target="_blank" href="https://podcasts.apple.com/mx/podcast/el-colmex-conocimiento-ciencia-y-cultura/id1554015844?l=en"><img class="img_net" src="<?=$this->imageLink('public/podcast-vino.png')?>" alt="Podcast bco"></a>
+	<a target="_blank" href="https://open.spotify.com/show/4bJyTYlgHMb3gKo6jtKm2D"><img class="img_net" src="<?=$this->imageLink('public/spotify-vino.png')?>" alt="Spotify bco"></a>
+	<!--<a href="https://soundcloud.com/elcolmex" target="_blank"><img class="img_net" src="<?=$this->imageLink('public/soundcloud.png')?>" alt="Soundcloud vino"></a>-->
+</div>
 </div>
 <div class="banner container navbar">
-  <div class="col-md-4">
-    <a class=" lang-<?=$this->layout()->userLang ?>" href="<?=$this->url('home')?>">
-      <img src="<?=$this->imageLink('public/logo_umad.png')?>" alt="UMAD">
-    </a>
+  <div>
+    <img class="img_net" src="<?=$this->imageLink('public/Banner.png')?>" alt="Spotify bco"></a>
   </div>
   <div class="navbar-header">
     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#header-collapse" aria-label="<?=$this->transEscAttr('mobile_toggle_navigation_text')?>">
       <?=$this->icon('ui-menu') ?>
     </button>
-
   </div>
   <?php if (!isset($this->layout()->renderingError)): ?>
     <div class="collapse navbar-collapse" id="header-collapse">
       <nav>
         <ul class="nav navbar-nav navbar-right flip">
+          <li>
+            <a class="navbar-brand lang-<?=$this->layout()->userLang ?>" href="<?=$this->url('home')?>"><?=$this->transEsc('Home')?></a>
+          </li>
+          <li>
+            <a href="<?=$this->url('content-page', ['page' => 'indexes']) ?>"> índices</a>
+          </li>
+          <li>
+            <a href="<?=$this->url('content-page', ['page' => 'statistics']) ?>">Estadísticas</a>
+          </li>
+          <li>
+            <a href="<?=$this->url('content-page', ['page' => 'search']) ?>"><?=$this->transEsc('Search')?></a>
+          </li>
+          
           <?php if ($this->feedback()->tabEnabled()): ?>
             <li>
               <a class="icon-link" id="feedbackLink" data-lightbox href="<?=$this->url('feedback-home') ?>">
@@ -55,18 +64,6 @@
               </a>
             </li>
           <?php endif; ?>
-          <li>
-          <a class="lang-<?=$this->layout()->userLang ?>" href="<?=$this->url('home')?>">
-           <img src="<?=$this->imageLink('public/CA.png')?>" alt="Icon" class="icon-left" />
-           <?=$this->transEsc('Home')?>
-           </a>
-          </li>          
-          <li>
-          <a href="<?=$this->url('content-page', ['page' => 'contacto']) ?>"> 
-          <img src="<?=$this->imageLink('public/Icon material-message.png')?>" alt="Icon" class="icon-left" /> 
-              <?=$this->transEsc('Contact')?>
-            </a>
-          </li>
           <?php if (is_object($account) && $account->loginEnabled()): // hide login/logout if unavailable ?>
             <?php if ($account->getIdentity()): ?>
               <li class="logoutOptions<?php if ($account->dropdownEnabled()): ?> with-dropdown<?php endif ?>">
@@ -107,8 +104,7 @@
           <?php endif; ?>
 
           <?php if (isset($this->layout()->themeOptions) && count($this->layout()->themeOptions) > 1): ?>
-             
-             <?=$this->component('menu-button', [
+              <?=$this->component('menu-button', [
                   'toggleLabel' => 'Theme',
                   'wrapperClass' => 'theme-selector',
                   'wrapperTag' => 'li',
@@ -123,26 +119,25 @@
                   ),
               ]) ?>
           <?php endif; ?>
-          
-        <?php if (isset($this->layout()->allLangs) && count($this->layout()->allLangs) > 1): ?>
-    <?=$this->component('menu-button', [
-        'toggleLabel' => 'Language',
-        'imageSrc' => $this->imageLink('public/Idioma UMAD.png'),
-        'wrapperClass' => 'language',
-        'wrapperTag' => 'li',
-        'menuItems' => array_map(
-            function ($langCode, $langName) {
-                return [
-                    'label' => $this->displayLanguageOption($langName),
-                    'url' => $this->url()->addQueryParameters(['lng' => $langCode]),
-                    'selected' => $this->layout()->userLang == $langCode,
-                ];
-            },
-            array_keys($this->layout()->allLangs),
-            array_values($this->layout()->allLangs)
-        ),
-    ]) ?>
-<?php endif; ?>
+
+          <?php if (isset($this->layout()->allLangs) && count($this->layout()->allLangs) > 1): ?>
+              <?=$this->component('menu-button', [
+                  'toggleLabel' => 'Language',
+                  'wrapperClass' => 'language',
+                  'wrapperTag' => 'li',
+                  'menuItems' => array_map(
+                      function ($langCode, $langName) {
+                          return [
+                            'label' => $this->displayLanguageOption($langName),
+                            'url' => $this->url()->addQueryParameters(['lng' => $langCode]),
+                            'selected' => $this->layout()->userLang == $langCode,
+                          ];
+                      },
+                      array_keys($this->layout()->allLangs),
+                      array_values($this->layout()->allLangs),
+                  ),
+              ]) ?>
+          <?php endif; ?>
         </ul>
       </nav>
     </div>
@@ -150,7 +145,7 @@
 </div>
 <?php if ($this->layout()->searchbox !== false): ?>
   <div class="search container navbar">
-    <div class="nav-search searchbox hidden-print" role="search">
+    <div class="nav searchbox hidden-print" role="search">
       <?=$this->layout()->searchbox ?>
     </div>
   </div>

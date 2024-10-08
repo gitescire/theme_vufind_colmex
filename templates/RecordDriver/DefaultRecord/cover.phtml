@@ -2,7 +2,7 @@
 <?php if ($this->link && !empty($alt)): ?><a href="<?=$this->escapeHtmlAttr($this->link)?>" class="record-cover-link"><?php endif; ?>
 <?php /* Display thumbnail if appropriate: */ ?>
 <?php if ($cover): ?>
-  <img src="<?=$this->imageLink('public/UMAD.png')?>; ?>" <?php if ($linkPreview): ?>data-linkpreview="true" <?php endif; ?>class="recordcover" alt="<?=$this->escapeHtmlAttr($alt); ?>">
+  <!-- <img src="<?=$this->escapeHtmlAttr($cover); ?>" <?php if ($linkPreview): ?>data-linkpreview="true" <?php endif; ?>class="recordcover" alt="<?=$this->escapeHtmlAttr($alt); ?>"> -->
 <?php elseif ($cover === false): ?>
   <img src="<?=$this->url('cover-unavailable')?>" <?php if ($linkPreview): ?>data-linkpreview="true" <?php endif; ?>class="recordcover" alt="">
 <?php else: ?>
@@ -14,3 +14,42 @@
   </div>
 <?php endif; ?>
 <?php if ($this->link && !empty($alt)): ?></a><?php endif; ?>
+<?php
+  $imageRec='public/default.svg';
+  foreach ($this->driver->getInstitutions() as $available){
+
+    switch ($available) {
+      case "Nueva Revista de Filología Hispánica":
+        $imageRec='public/nrfh.jpg';
+          break;
+      case "Historia Mexicana":
+        $imageRec='public/HM.jpg';
+          break;
+      case "Foro Internacional":
+        $imageRec='public/FI.jpg';
+          break;
+      case "Estudios Sociológicos":
+        $imageRec='public/ES.jpg';
+            break;
+      case "Estudios Económicos":
+        $imageRec='public/EE.jpg';
+            break;
+      case "Estudios Demográficos y Urbanos":
+        $imageRec='public/edu.jpg';
+            break;
+      case "Estudios de Género":
+        $imageRec='public/EG.jpg';
+            break;
+      case "Anuario Asia Pacífico":
+        $imageRec='public/AAP.jpg';
+            break;
+      case "Estudios de Asia y África":
+        $imageRec='public/eaa.jpg';
+            break;
+      case "Cuadernos de Lingüística":
+        $imageRec='public/CL.jpg';
+            break;
+  }
+}    
+ ?>
+ <img src="<?=$this->imageLink($imageRec)?>"  <?php if ($linkPreview): ?>data-linkpreview="true" <?php endif; ?>class="recordcover" alt="<?=$this->escapeHtmlAttr($alt); ?>" />

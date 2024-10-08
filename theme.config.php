@@ -49,6 +49,8 @@ return [
         ['file' => 'observer_manager.js', 'priority' => 370],
         ['file' => 'openurl.js', 'priority' => 380],
         ['file' => 'list_item_selection.js', 'priority' => 390],
+        ['file' => 'jquery.shuffle.min.js', 'priority' => 390],
+        ['file' => 'custom.js', 'priority' => 390],
     ],
     /**
      * Configuration for a single or multiple favicons.
@@ -74,7 +76,7 @@ return [
      *      ],
      *  ]
      */
-    'favicon' => 'public/UMAD.ico',
+    'favicon' => 'vufind-favicon.ico',
     'helpers' => [
         'factories' => [
             'VuFind\View\Helper\Bootstrap3\BulkAction' => 'VuFind\View\Helper\Root\BulkActionFactory',

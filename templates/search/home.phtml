@@ -14,11 +14,181 @@
   $this->layout()->breadcrumbs = false;
 ?>
 
-<div class="searchHomeContent">
-  <?php $this->slot('search-home-hero')->start() ?>
-    <?=$this->context($this)->renderInContext('search/searchbox.phtml', ['ignoreHiddenFilterMemory' => true])?>
-    <?=$this->inlineScript(\Laminas\View\Helper\HeadScript::SCRIPT, '$("#searchForm_lookfor").focus();', 'SET'); ?>
-  <?=$this->slot('search-home-hero')->end() ?>
+
+<div class="container">
+  <center><h3>Revistas</h3></center>
+<ul class="portfolio-items list-unstyled shuffle" id="random-list" style="position: relative; overflow: hidden; height: 1958.4px; transition: height 250ms ease-out;">
+
+<li class="col-md-4 col-sm-4 col-xs-6 shuffle-item filtered" data-groups="Nueva Revista de Filología Hispánica" data-title="Nueva Revista de Filología Hispánica" style="position: absolute; top: 0px; left: 0px; visibility: visible; opacity: 1; transform: translate3d(780px, 0px, 0px) scale3d(1, 1, 1); transition: transform 250ms ease-out, opacity 250ms ease-out;">
+<div align="center">
+<h3>Nueva Revista de Filología Hispánica</h3>
 </div>
-<?=$this->render('search/counter.phtml', ['ignoreHiddenFilterMemory' => true]);?>
+<figure class="portfolio-item">
+<a href="https://nrfh.colmex.mx/index.php/nrfh" class="item1" target="_blank" title="Ir al sitio de la revista">
+<img src="<?=$this->imageLink('public/nrfh.jpg')?>" alt="Item 1" class="img-responsive">
+
+</a>
+</figure>
+<div align="center">
+<a class="bkinfo" href="https://nrfh.colmex.mx/index.php/nrfh" target="_blank">Ir al Sitio</a>
+<hr>
+</div>
+</li>
+<li class="col-md-4 col-sm-4 col-xs-6 shuffle-item filtered" data-groups="Foro<br />Internacional" data-title="Foro<br />Internacional" style="position: absolute; top: 0px; left: 0px; visibility: visible; opacity: 1; transform: translate3d(0px, 979px, 0px) scale3d(1, 1, 1); transition: transform 250ms ease-out, opacity 250ms ease-out;">
+<div align="center">
+<h3>Foro<br>Internacional</h3>
+</div>
+<figure class="portfolio-item">
+<a href="https://forointernacional.colmex.mx/index.php/fi" class="item1" target="_blank" title="Ir al sitio de la revista">
+<img src="<?=$this->imageLink('public/FI.jpg')?>" alt="Item 1" class="img-responsive">
+
+</a>
+</figure>
+<div align="center">
+<a class="bkinfo" href="https://forointernacional.colmex.mx/index.php/fi" target="_blank">Ir al Sitio</a>
+<hr>
+</div>
+</li>
+<li class="col-md-4 col-sm-4 col-xs-6 shuffle-item filtered" data-groups="Historia<br />Mexicana" data-title="Historia<br />Mexicana" style="position: absolute; top: 0px; left: 0px; visibility: visible; opacity: 1; transform: translate3d(0px, 490px, 0px) scale3d(1, 1, 1); transition: transform 250ms ease-out, opacity 250ms ease-out;">
+<div align="center">
+<h3>Historia<br>Mexicana</h3>
+</div>
+<figure class="portfolio-item">
+<a href="https://historiamexicana.colmex.mx/index.php/RHM" class="item1" target="_blank" title="Ir al sitio de la revista">
+<img src="<?=$this->imageLink('public/HM.jpg')?>" alt="Item 1" class="img-responsive">
+
+</a>
+</figure>
+<div align="center">
+<a class="bkinfo" href="https://historiamexicana.colmex.mx/index.php/RHM" target="_blank">Ir al Sitio</a>
+<hr>
+</div>
+</li>
+<li class="col-md-4 col-sm-4 col-xs-6 shuffle-item filtered" data-groups="Estudios de Asia y<br />África" data-title="Estudios de Asia y<br />África" style="position: absolute; top: 0px; left: 0px; visibility: visible; opacity: 1; transform: translate3d(0px, 1469px, 0px) scale3d(1, 1, 1); transition: transform 250ms ease-out, opacity 250ms ease-out;">
+<div align="center">
+<h3>Estudios de Asia y<br>África</h3>
+</div>
+<figure class="portfolio-item">
+<a href="https://estudiosdeasiayafrica.colmex.mx/index.php/eaa" class="item1" target="_blank" title="Ir al sitio de la revista">
+<img src="<?=$this->imageLink('public/eaa.jpg')?>" alt="Item 1" class="img-responsive">
+
+</a>
+</figure>
+<div align="center">
+<a class="bkinfo" href="https://estudiosdeasiayafrica.colmex.mx/index.php/eaa" target="_blank">Ir al Sitio</a>
+<hr>
+</div>
+</li>
+<li class="col-md-4 col-sm-4 col-xs-6 shuffle-item filtered" data-groups="Estudios de<br />Género" data-title="Estudios de<br />Género" style="position: absolute; top: 0px; left: 0px; visibility: visible; opacity: 1; transform: translate3d(390px, 0px, 0px) scale3d(1, 1, 1); transition: transform 250ms ease-out, opacity 250ms ease-out;">
+<div align="center">
+<h3>Estudios de<br>Género</h3>
+</div>
+<figure class="portfolio-item">
+<a href="https://estudiosdegenero.colmex.mx/index.php/eg" class="item1" target="_blank" title="Ir al sitio de la revista">
+<img src="<?=$this->imageLink('public/EG.jpg')?>" alt="Item 1" class="img-responsive">
+
+</a>
+</figure>
+<div align="center">
+<a class="bkinfo" href="https://estudiosdegenero.colmex.mx/index.php/eg" target="_blank">Ir al Sitio</a>
+<hr>
+</div>
+</li>
+<li class="col-md-4 col-sm-4 col-xs-6 shuffle-item filtered" data-groups="Estudios<br />Demográficos y Urbanos" data-title="Estudios<br />Demográficos y Urbanos" style="position: absolute; top: 0px; left: 0px; visibility: visible; opacity: 1; transform: translate3d(780px, 490px, 0px) scale3d(1, 1, 1); transition: transform 250ms ease-out, opacity 250ms ease-out;">
+<div align="center">
+<h3>Estudios<br>Demográficos y Urbanos</h3>
+</div>
+<figure class="portfolio-item">
+<a href="https://estudiosdemograficosyurbanos.colmex.mx/index.php/edu" class="item1" target="_blank" title="Ir al sitio de la revista">
+<img src="<?=$this->imageLink('public/edu.jpg')?>" alt="Item 1" class="img-responsive">
+
+</a>
+</figure>
+<div align="center">
+<a class="bkinfo" href="https://estudiosdemograficosyurbanos.colmex.mx/index.php/edu" target="_blank">Ir al Sitio</a>
+<hr>
+</div>
+</li>
+<li class="col-md-4 col-sm-4 col-xs-6 shuffle-item filtered" data-groups="Cuadernos de<br />Lingüística" data-title="Cuadernos de<br />Lingüística" style="position: absolute; top: 0px; left: 0px; visibility: visible; opacity: 1; transform: translate3d(390px, 490px, 0px) scale3d(1, 1, 1); transition: transform 250ms ease-out, opacity 250ms ease-out;">
+<div align="center">
+<h3>Cuadernos de<br>Lingüística</h3>
+</div>
+<figure class="portfolio-item">
+<a href="https://cuadernoslinguistica.colmex.mx/index.php/cl" class="item1" target="_blank" title="Ir al sitio de la revista">
+<img src="<?=$this->imageLink('public/CL.jpg')?>" alt="Item 1" class="img-responsive">
+
+</a>
+</figure>
+<div align="center">
+<a class="bkinfo" href="https://cuadernoslinguistica.colmex.mx/index.php/cl" target="_blank">Ir al Sitio</a>
+<hr>
+</div>
+</li>
+<li class="col-md-4 col-sm-4 col-xs-6 shuffle-item filtered" data-groups="Estudios<br />Económicos" data-title="Estudios<br />Económicos" style="position: absolute; top: 0px; left: 0px; visibility: visible; opacity: 1; transform: translate3d(780px, 1469px, 0px) scale3d(1, 1, 1); transition: transform 250ms ease-out, opacity 250ms ease-out;">
+<div align="center">
+<h3>Estudios<br>Económicos</h3>
+</div>
+<figure class="portfolio-item">
+<a href="https://estudioseconomicos.colmex.mx/" class="item1" target="_blank" title="Ir al sitio de la revista">
+<img src="<?=$this->imageLink('public/EE.jpg')?>" alt="Item 1" class="img-responsive">
+
+</a>
+</figure>
+<div align="center">
+<a class="bkinfo" href="https://estudioseconomicos.colmex.mx/" target="_blank">Ir al Sitio</a>
+<hr>
+</div>
+</li>
+<li class="col-md-4 col-sm-4 col-xs-6 shuffle-item filtered" data-groups="Otros<br />Diálogos" data-title="Otros<br />Diálogos" style="position: absolute; top: 0px; left: 0px; visibility: visible; opacity: 1; transform: translate3d(780px, 979px, 0px) scale3d(1, 1, 1); transition: transform 250ms ease-out, opacity 250ms ease-out;">
+<div align="center">
+<h3>Otros<br>Diálogos</h3>
+</div>
+<figure class="portfolio-item">
+<a href="https://otrosdialogos.colmex.mx/" class="item1" target="_blank" title="Ir al sitio de la revista">
+<img src="<?=$this->imageLink('public/dialogos.jpg')?>" alt="Item 1" class="img-responsive">
+
+</a>
+</figure>
+<div align="center">
+<a class="bkinfo" href="https://otrosdialogos.colmex.mx/" target="_blank">Ir al Sitio</a>
+<hr>
+</div>
+</li>
+<li class="col-md-4 col-sm-4 col-xs-6 shuffle-item filtered" data-groups="Estudios<br />Sociológicos" data-title="Estudios<br />Sociológicos" style="position: absolute; top: 0px; left: 0px; visibility: visible; opacity: 1; transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1); transition: transform 250ms ease-out, opacity 250ms ease-out;">
+<div align="center">
+<h3>Estudios<br>Sociológicos</h3>
+</div>
+<figure class="portfolio-item">
+<a href="https://estudiossociologicos.colmex.mx/index.php/es" class="item1" target="_blank" title="Ir al sitio de la revista">
+<img src="<?=$this->imageLink('public/ES.jpg')?>" alt="Item 1" class="img-responsive">
+
+</a>
+</figure>
+<div align="center">
+<a class="bkinfo" href="https://estudiossociologicos.colmex.mx/index.php/es" target="_blank">Ir al Sitio</a>
+<hr>
+</div>
+</li>
+<li class="col-md-4 col-sm-4 col-xs-6 shuffle-item filtered" data-groups="Anuario<br />Asia Pacífico" data-title="Anuario<br />Asia Pacífico" style="position: absolute; top: 0px; left: 0px; visibility: visible; opacity: 1; transform: translate3d(390px, 980px, 0px) scale3d(1, 1, 1); transition: transform 250ms ease-out, opacity 250ms ease-out;">
+<div align="center">
+<h3>Anuario<br>Asia Pacífico</h3>
+</div>
+<figure class="portfolio-item">
+<a href="https://anuarioasiapacifico.colmex.mx/index.php/aap" class="item1" target="_blank" title="Ir al sitio de la revista">
+<img src="<?=$this->imageLink('public/AAP.jpg')?>" alt="Item 1" class="img-responsive">
+
+</a>
+</figure>
+<div align="center">
+<a class="bkinfo" href="https://anuarioasiapacifico.colmex.mx/index.php/aap" target="_blank">Ir al Sitio</a>
+<hr>
+</div>
+</li>
+
+<!-- sizer -->
+<li class="col-md-4 col-sm-4 col-xs-6 shuffle_sizer shuffle-item filtered" style="position: absolute; top: 0px; left: 0px; visibility: visible; opacity: 1; transform: translate3d(390px, 979px, 0px) scale3d(1, 1, 1); transition: transform 250ms ease-out, opacity 250ms ease-out;"></li>
+</ul>
+</div>
+
+
 

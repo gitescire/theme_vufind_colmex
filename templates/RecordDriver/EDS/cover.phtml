@@ -3,6 +3,7 @@
   $alt = $this->link && $cover !== false ? trim($this->driver->tryMethod('getTitle') ?? '') : '';
 ?>
 <?php if ($this->link && !empty($alt)): ?><a href="<?=$this->escapeHtmlAttr($this->link)?>" class="record-cover-link"><?php endif; ?>
+  Prueba2
 <?php /* Display thumbnail if appropriate: */ ?>
 <?php if ($cover): ?>
   <img src="<?=$this->escapeHtmlAttr($cover); ?>" <?php if ($linkPreview): ?>data-linkpreview="true" <?php endif; ?>class="recordcover" alt="<?=$this->escapeHtmlAttr($alt); ?>">
