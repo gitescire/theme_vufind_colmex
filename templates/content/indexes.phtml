@@ -1,33 +1,58 @@
-<?php  
-function fetch_data($url) {
-    $response = file_get_contents($url);
-    if ($response === false) {
-        return null;
-    }
-    $data = json_decode($response, true);
-    if ($data === null) {
-        return null; 
-    }
+<?php
 
-    $numTopics = [];
-    $categoryList = [];
+  $this->headScript()->appendFile('index.js');
 
-    foreach ($data['response']['docs'] as $doc) {
-        if (isset($doc['topic'])) {
-            $numTopics[] = count($doc['topic']);
-            $categoryList[] = $doc['topic'];
-        } else {
-            $numTopics[] = 0; 
-            $categoryList[] = []; 
+function fetch_data($urls) {
+    $allData = [
+        'numTopics' => [],
+        'categoryList' => []
+    ];
+
+    foreach ($urls as $url) {
+        $response = file_get_contents($url);
+        if ($response === false) {
+            $allData['numTopics'][] = 0;
+            $allData['categoryList'][] = [];
+            continue;
         }
+
+        $data = json_decode($response, true);
+        if ($data === null) {
+            $allData['numTopics'][] = 0;
+            $allData['categoryList'][] = [];
+            continue;
+        }
+
+        $numTopics = 0;
+        $categoryList = [];
+
+        foreach ($data['response']['docs'] as $doc) {
+            if (isset($doc['index_str_mv'])) {
+                $numTopics = count($doc['index_str_mv']);
+                $categoryList = $doc['index_str_mv'];
+            }
+        }
+
+        $allData['numTopics'][] = $numTopics;
+        $allData['categoryList'][] = $categoryList;
     }
 
-    return ['numTopics' => $numTopics, 'categoryList' => $categoryList];
+    return $allData;
 }
 
-$url = "http://localhost:8983/solr/biblio/select?fl=topic&fq=institution%3A%20Estudios%20Econ%C3%B3micos&indent=true&q.op=OR&q=*%3A*&useParams=";
+$urls = [
+    "http://localhost:8983/solr/biblio/select?fl=index_str_mv&fq=institution%3A%20%22Estudios%20de%20Asia%20y%20%C3%81frica%22&indent=true&q.op=OR&q=*%3A*&rows=3&useParams=", //Estudios Asia y Africa
+    "http://localhost:8983/solr/biblio/select?fl=index_str_mv&fq=institution%3A%20%22Historia%20Mexicana%22&indent=true&q.op=OR&q=*%3A*&rows=3&useParams=", //Historia Mexicana
+    "http://localhost:8983/solr/biblio/select?fl=index_str_mv&fq=institution%3A%20%22Foro%20Internacional%22&indent=true&q.op=OR&q=*%3A*&rows=3&useParams=", //Foro Intenacional
+    "http://localhost:8983/solr/biblio/select?fl=index_str_mv&fq=institution%3A%20%22Estudios%20Sociol%C3%B3gicos%22&indent=true&q.op=OR&q=*%3A*&rows=3&useParams=", //Estudios Sociologicos
+    "http://localhost:8983/solr/biblio/select?fl=index_str_mv&fq=institution%3A%20%22Estudios%20Demogr%C3%A1ficos%20y%20Urbanos%22&indent=true&q.op=OR&q=*%3A*&rows=3&useParams=", //Estudios demograficos y urbanos
+    "http://localhost:8983/solr/biblio/select?fl=index_str_mv&fq=institution%3A%20%22Cuadernos%20de%20Ling%C3%BC%C3%ADstica%22&indent=true&q.op=OR&q=*%3A*&rows=3&useParams=", //Cuadernos de linguistica
+    "http://localhost:8983/solr/biblio/select?fl=index_str_mv&fq=institution%3A%20%22Nueva%20Revista%20de%20Filolog%C3%ADa%20Hisp%C3%A1nica%22&indent=true&q.op=OR&q=*%3A*&rows=3&useParams=", //Nueva revista de filologia hispanica
+    "http://localhost:8983/solr/biblio/select?fl=index_str_mv&fq=institution%3A%20%22Estudios%20de%20G%C3%A9nero%22&indent=true&q.op=OR&q=*%3A*&useParams=", //Estudios de Genero
+    "http://localhost:8983/solr/biblio/select?fl=index_str_mv&fq=institution%3A%20%22Estudios%20Econ%C3%B3micos%22&indent=true&q.op=OR&q=*%3A*&rows=3&useParams=", //Estudios Economicos
+];
 
-$data = fetch_data($url);
+$data = fetch_data($urls);
 $numTopics = $data['numTopics'];
 $categoryList = $data['categoryList'];
 ?>
@@ -143,7 +168,7 @@ $categoryList = $data['categoryList'];
     <div id="content-3" class="accordion-content">
     <?php if (!empty($categoryList[2])): ?>
             <ul class="category-list">
-                <?php foreach ($categoryList[2] as $topic): ?>
+                <?php foreach ($categoryList[2] as $category): ?>
                 <li > 
                     <span class="category-name"><?= htmlspecialchars($category) ?></span>
                     <img src="<?=$this->imageLink('public/check.png')?>" alt="Icono" class="category-icon">
@@ -241,72 +266,7 @@ $categoryList = $data['categoryList'];
 </div>
 
 <script>
-    const items = document.querySelectorAll('.accordion-item button');
 
-    items.forEach(item => {
-        item.addEventListener('click', () => {
-            const targetId = item.getAttribute('data-target');
-            const content = document.getElementById(targetId);
-            const icon = item.querySelector('i');
-
-            const isActive = content.classList.contains('active');
-
-            const activeItem = document.querySelector('.accordion-content.active');
-            const activeButton = document.querySelector('.accordion-item button.active');
-
-            if (activeItem && activeItem !== content) {
-                activeItem.classList.remove('active');
-                const activeIcon = activeButton.querySelector('i.rotated');
-                if (activeIcon) activeIcon.classList.remove('rotated');
-                activeButton.classList.remove('active');
-            }
-
-            if (!isActive) {
-                content.classList.add('active');
-                icon.classList.add('rotated');
-                item.classList.add('active');
-            } else {
-                content.classList.remove('active');
-                icon.classList.remove('rotated');
-                item.classList.remove('active');
-            }
-        });
-    });
-
-    //Funcion para cambiar de lugar el contenido en dispositivos mobiles y se muestren
-    //debajo de su respectiva categoria
-    function moveContentToAccordion() {
-        const isMobile = window.innerWidth <= 480;
-        const accordion = document.querySelector('.accordion');
-
-        document.querySelectorAll('.accordion-content').forEach(content => {
-            const targetId = content.id;
-            const button = document.querySelector(`button[data-target="${targetId}"]`);
-
-            if (isMobile) {
-                button.insertAdjacentElement('afterend', content);
-            } else {
-                document.querySelector('.maindiv').appendChild(content);
-            }
-        });
-    }
-
-    function activateFirstAccordionItem() {
-        if (window.innerWidth > 768) { 
-            const firstItem = items[0];
-            const firstContent = document.getElementById(firstItem.getAttribute('data-target'));
-            const firstIcon = firstItem.querySelector('i');
-
-            firstContent.classList.add('active');
-            firstIcon.classList.add('rotated');
-            firstItem.classList.add('active');
-        }
-    }
-
-    window.addEventListener('resize', moveContentToAccordion);
-
-    moveContentToAccordion();
-    activateFirstAccordionItem();
 </script>
 </body>
 </html>

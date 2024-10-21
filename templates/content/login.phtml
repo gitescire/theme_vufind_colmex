@@ -1,0 +1,45 @@
+<?php session_start();
+
+$this->layout()->searchbox = false;
+
+$Errormsg = '';
+
+
+if (isset($_SESSION['UserData']['Username'])) {
+    header("location:admin");
+    exit;
+}
+
+if (isset($_POST['submit'])) {
+
+    //Array para usuarios 'registrados'
+    $logins = array('Colmex' => 'ColmexPrueba767',);
+    
+    $Username = isset($_POST['username']) ? $_POST['username'] : '';
+    $Password = isset($_POST['password']) ? $_POST['password'] : '';
+    
+    if (isset($logins[$Username]) && $logins[$Username] == $Password) {
+        $_SESSION['UserData']['Username'] = $Username; 
+        header("location:admin");
+        exit;
+    } else {
+        
+        $Errormsg = "<span style='color:red'>Datos invalidos</span>";
+    }
+}
+?>
+
+
+<div class="form-main">
+    <form action="" method="post" name="form-login">
+        <label for="username"><?=$this->transEsc('Username')?></label>
+        <input type="text" name="username" class="form-input" required>
+
+        <label for="password"><?=$this->transEsc('Password')?></label>
+        <input type="password" name="password" class="form-input" required>
+
+        <?= isset($Errormsg) ? $Errormsg : '' ?>
+        <input type="submit" name="submit" value="Iniciar sesión" class="form-button">
+        
+    </form>
+</div>

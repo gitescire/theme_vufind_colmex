@@ -1,0 +1,77 @@
+<?php
+session_start(); 
+
+$this->headTitle($this->translate('Admin'));
+$this->layout()->searchbox = false;
+
+if (!isset($_SESSION['UserData']['Username'])) {
+    header("location:login");
+    exit;
+}
+
+//Arreglo con los nombres de las imagenes
+$Images = [
+    ['title' => 'Anuario Asia Pacífico', 'filename' => 'AAP.jpg'],
+    ['title' => 'Cuadernos de Lingüística', 'filename' => 'CL.jpg'],
+    ['title' => 'Estudios de Asia y África', 'filename' => 'eaa.jpg'],
+    ['title' => 'Estudios Demográficos y Urbanos', 'filename' => 'edu.jpg'],
+    ['title' => 'Estudios de Género', 'filename' => 'EG.jpg'],
+    ['title' => 'Estudios Económicos', 'filename' => 'EE.jpg'],
+    ['title' => 'Estudios Sociológicos', 'filename' => 'ES.jpg'],
+    ['title' => 'Foro Internacional', 'filename' => 'FI.jpg'],
+    ['title' => 'Historia Mexicana', 'filename' => 'HM.jpg'],
+    ['title' => 'Nueva Revista de Filología Hispánica', 'filename' => 'nrfh.jpg'],
+    ['title' => 'Otros Diálogos', 'filename' => 'dialogos.jpg'],
+
+  ];
+?>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<div class="logout-head">
+    <h2>Imágenes Disponibles</h2>
+    <a href="logout" class="logout-button">Cerrar sesión</a>
+</div>
+
+<div class="table-container">
+    <table class="table-responsive">
+        <thead>
+            <tr>
+                <th data-label="Título">Título</th>
+                <th data-label="Imagen">Imagen</th>
+                <th data-label="Acciones">Acciones</th>
+            </tr>
+        </thead>
+        <tbody class="table">
+            <?php foreach ($Images as $image): ?>
+                <tr>
+                    <td class="table-title" data-label="Título"><?= htmlspecialchars($image['title']) ?></td>
+                    <td class="table-img" data-label="Imagen">
+                        <img src="<?= $this->imageLink('public/' . $image['filename']) ?>" alt="<?= htmlspecialchars($image['filename']) ?>">
+                    </td>
+                    <td data-label="Acciones">
+                       
+                        <form action="upload" method="POST" enctype="multipart/form-data">
+                        <?php if (isset($_SESSION['message'])): ?>
+                            <p class="table-error"><?= $_SESSION['message']; unset($_SESSION['message']); ?></p>
+                        <?php endif; ?>
+                            <input type="hidden" name="existing_file" value="<?= htmlspecialchars($image['filename']) ?>" onsubmit="">
+                            <input type="file" name="file" class="file" required>
+                            <button type="submit" name="submit">Modificar Imagen</button>
+                        </form>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
+
