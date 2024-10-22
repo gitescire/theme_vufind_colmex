@@ -1,0 +1,63 @@
+<?php
+if (isset($_POST['submit'])) {
+    echo "Formulario enviado.<br>"; // Mensaje de depuración
+
+    $file = $_FILES['file'];
+    $existingFileName = $_POST['existing_file']; // Nombre del archivo existente
+
+    // Se obtienen todos los datos del archivo que se va a subir
+    $fileName = $_FILES['file']['name']; // Nombre original del archivo
+    $fileTmpName = $_FILES['file']['tmp_name']; // Directorio temporal del archivo
+    $fileSize = $_FILES['file']['size']; // Tamaño del archivo
+    $fileError = $_FILES['file']['error']; // Errores (si es que hay)
+    $fileType = $_FILES['file']['type']; // Tipo del archivo
+
+    $fileExt = explode('.', $fileName);
+    $fileActualExt = strtolower(end($fileExt));
+
+    $allowed = array('jpg');
+
+    if (in_array($fileActualExt, $allowed)) {
+      if ($fileError === 0) {
+          if ($fileSize < 3000000) {
+              $fileDestination = '/usr/local/vufind/themes/theme_vufind_colmex/images/public/' . $existingFileName;
+
+              if (move_uploaded_file($fileTmpName, $fileDestination)) {
+                  $_SESSION['message'] = "Imagen actualizada con éxito.";
+              } else {
+                  $error = error_get_last();
+                  $_SESSION['message'] = "Ha habido un problema al mover el archivo! Error: " . $error['message'];
+              }
+          } else {
+              $_SESSION['message'] = "El archivo es demasiado grande!";
+          }
+      } else {
+          switch ($fileError) {
+              case UPLOAD_ERR_INI_SIZE:
+                  $_SESSION['message'] = "El archivo excede el límite de tamaño permitido por el servidor.";
+                  break;
+              case UPLOAD_ERR_FORM_SIZE:
+                  $_SESSION['message'] = "El archivo excede el tamaño máximo permitido por el formulario.";
+                  break;
+              case UPLOAD_ERR_PARTIAL:
+                  $_SESSION['message'] = "El archivo fue subido parcialmente.";
+                  break;
+              case UPLOAD_ERR_NO_FILE:
+                  $_SESSION['message'] = "No se subió ningún archivo.";
+                  break;
+              case UPLOAD_ERR_NO_TMP_DIR:
+                  $_SESSION['message'] = "No se encontró el directorio temporal.";
+                  break;
+              case UPLOAD_ERR_CANT_WRITE:
+                  $_SESSION['message'] = "Error al escribir el archivo en el disco.";
+                  break;
+          }
+      }
+  } else {
+      $_SESSION['message'] = "No se pueden subir archivos de este tipo, archivos permitidos: jpg ";
+  }
+  header("Location: admin");
+  exit();
+
+}
+?>
