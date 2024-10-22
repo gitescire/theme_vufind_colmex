@@ -1,272 +1,92 @@
 <?php
 
-  $this->headScript()->appendFile('index.js');
+$this->headScript()->appendFile('index.js');
 
-function fetch_data($urls) {
-    $allData = [
-        'numTopics' => [],
-        'categoryList' => []
-    ];
+$url = 'http://localhost:8983/solr/biblio/select?q=*:*&facet=true&facet.pivot=institution,index_str_mv&facet.limit=-1&rows=0';
 
-    foreach ($urls as $url) {
-        $response = file_get_contents($url);
-        if ($response === false) {
-            $allData['numTopics'][] = 0;
-            $allData['categoryList'][] = [];
-            continue;
-        }
+$json = file_get_contents($url);
 
-        $data = json_decode($response, true);
-        if ($data === null) {
-            $allData['numTopics'][] = 0;
-            $allData['categoryList'][] = [];
-            continue;
-        }
-
-        $numTopics = 0;
-        $categoryList = [];
-
-        foreach ($data['response']['docs'] as $doc) {
-            if (isset($doc['index_str_mv'])) {
-                $numTopics = count($doc['index_str_mv']);
-                $categoryList = $doc['index_str_mv'];
-            }
-        }
-
-        $allData['numTopics'][] = $numTopics;
-        $allData['categoryList'][] = $categoryList;
-    }
-
-    return $allData;
+if ($json === false) {
+    die('Error al obtener los datos.');
 }
 
-$urls = [
-    "http://localhost:8983/solr/biblio/select?fl=index_str_mv&fq=institution%3A%20%22Estudios%20de%20Asia%20y%20%C3%81frica%22&indent=true&q.op=OR&q=*%3A*&rows=3&useParams=", //Estudios Asia y Africa
-    "http://localhost:8983/solr/biblio/select?fl=index_str_mv&fq=institution%3A%20%22Historia%20Mexicana%22&indent=true&q.op=OR&q=*%3A*&rows=3&useParams=", //Historia Mexicana
-    "http://localhost:8983/solr/biblio/select?fl=index_str_mv&fq=institution%3A%20%22Foro%20Internacional%22&indent=true&q.op=OR&q=*%3A*&rows=3&useParams=", //Foro Intenacional
-    "http://localhost:8983/solr/biblio/select?fl=index_str_mv&fq=institution%3A%20%22Estudios%20Sociol%C3%B3gicos%22&indent=true&q.op=OR&q=*%3A*&rows=3&useParams=", //Estudios Sociologicos
-    "http://localhost:8983/solr/biblio/select?fl=index_str_mv&fq=institution%3A%20%22Estudios%20Demogr%C3%A1ficos%20y%20Urbanos%22&indent=true&q.op=OR&q=*%3A*&rows=3&useParams=", //Estudios demograficos y urbanos
-    "http://localhost:8983/solr/biblio/select?fl=index_str_mv&fq=institution%3A%20%22Cuadernos%20de%20Ling%C3%BC%C3%ADstica%22&indent=true&q.op=OR&q=*%3A*&rows=3&useParams=", //Cuadernos de linguistica
-    "http://localhost:8983/solr/biblio/select?fl=index_str_mv&fq=institution%3A%20%22Nueva%20Revista%20de%20Filolog%C3%ADa%20Hisp%C3%A1nica%22&indent=true&q.op=OR&q=*%3A*&rows=3&useParams=", //Nueva revista de filologia hispanica
-    "http://localhost:8983/solr/biblio/select?fl=index_str_mv&fq=institution%3A%20%22Estudios%20de%20G%C3%A9nero%22&indent=true&q.op=OR&q=*%3A*&useParams=", //Estudios de Genero
-    "http://localhost:8983/solr/biblio/select?fl=index_str_mv&fq=institution%3A%20%22Estudios%20Econ%C3%B3micos%22&indent=true&q.op=OR&q=*%3A*&rows=3&useParams=", //Estudios Economicos
+$data = json_decode($json, true);
+
+
+// Nombre en solr => nombre para mostrar
+$institutions = [
+    "Estudios de Asia y África" => "Estudios de Asia y África",
+    "Historia Mexicana" => "Historia Mexicana",
+    "Foro Internacional" => "Foro Internacional",
+    "Estudios Sociológicos" => "Estudios Sociológicos de El Colegio de México",
+    "Estudios Demográficos y Urbanos" => "Estudios Demográficos y Urbanos",
+    "Cuadernos de Lingüística" => "Cuadernos de Lingüística de El Colegio de México",
+    "Nueva Revista de Filología Hispánica" => "Nueva Revista de Filología Hispánica",
+    "Estudios de Género" => "Revista Interdisciplinaria de Estudios de Género de El Colegio de México",
+    "Estudios Económicos" => "Revista Estudios Económicos de El Colegio de México"
 ];
 
-$data = fetch_data($urls);
-$numTopics = $data['numTopics'];
-$categoryList = $data['categoryList'];
+$indexData = [];
+$numCategories = [];
+
+foreach ($institutions as $key => $value) {
+    $indexData[$key] = []; // Cada institución tiene un array de datos vacío inicialmente
+    $numCategories[$key] = 0; // Numero de categorias
+}
+
+// Recorremos las instituciones devueltas por Solr
+if (isset($data['facet_counts']['facet_pivot']['institution,index_str_mv'])) {
+    foreach ($data['facet_counts']['facet_pivot']['institution,index_str_mv'] as $institution) {
+        $institutionName = $institution['value'];
+        
+        if (array_key_exists($institutionName, $institutions)) {
+            $indexValues = [];
+            
+            if (isset($institution['pivot'])) {
+                foreach ($institution['pivot'] as $pivot) {
+                    $indexValues[] = $pivot['value'];
+                }
+            }
+                        $indexData[$institutionName] = $indexValues;
+            $numCategories[$institutionName] = count($indexValues);
+        }
+    }
+} else {
+    echo "No se encontró el campo en solr";
+}
+
 ?>
 
 <h2>Índices</h2>
 <div class="maindiv">
     <div class="accordion">
-        <div class="accordion-item">
-            <button data-target="content-1">
-                <span class="button-text">Estudios de Asia y África</span>
-                <span class="content-number"><?= $numTopics[0] ?? '0' ?></span>
-                <i class="fa fa-chevron-down"></i>
-            </button>
+        <?php foreach ($institutions as $institution => $Name): ?>
+            <div class="accordion-item">
+                <button data-target="content-<?= htmlspecialchars($institution) ?>">
+                    <span class="button-text"><?= htmlspecialchars($Name) ?></span>
+                    <span class="content-number"><?= $numCategories[$institution] ?></span>
+                    <i class="fa fa-chevron-down"></i>
+                </button>
+            </div>
+        <?php endforeach; ?>
+    </div>
+
+    <!-- Contenido de las categorías dentro del acordeón -->
+    <?php foreach ($institutions as $institution => $Name): ?>
+        <div id="content-<?= htmlspecialchars($institution) ?>" class="accordion-content">
+            <?php if (!empty($indexData[$institution])): ?>
+                <ul class="category-list">
+                    <!-- Generar la lista de categorías (index_str_mv) -->
+                    <?php foreach ($indexData[$institution] as $category): ?>
+                        <li>
+                            <span class="category-name"><?= htmlspecialchars($category) ?></span>
+                            <img src="<?=$this->imageLink('public/check.png')?>" alt="Icono" class="category-icon">
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            <?php else: ?>
+                <p>No hay indices disponibles.</p>
+            <?php endif; ?>
         </div>
-
-        <div class="accordion-item">
-            <button data-target="content-2">
-                <span class="button-text">Historia Mexicana</span>
-                <span class="content-number"><?= $numTopics[1] ?? '0' ?></span>
-                <i class="fa fa-chevron-down"></i>
-            </button>
-        </div>
-
-
-
-        <div class="accordion-item">
-            <button data-target="content-3">
-                <span class="button-text">Foro Internacional</span>
-                <span class="content-number"><?= $numTopics[2] ?? '0' ?></span>
-                <i class="fa fa-chevron-down"></i>
-            </button>
-        </div>
-
-        <div class="accordion-item">
-            <button data-target="content-4">
-                <span class="button-text">Estudios Sociológicos de El Colegio de México</span>
-                <span class="content-number"><?= $numTopics[3] ?? '0' ?></span>
-                <i class="fa fa-chevron-down"></i>
-            </button>
-        </div>
-
-        <div class="accordion-item">
-            <button data-target="content-5">
-                <span class="button-text">Estudios Demográfios y Urbanos</span>
-                <span class="content-number"><?= $numTopics[4] ?? '0' ?></span>
-                <i class="fa fa-chevron-down"></i>
-            </button>
-        </div>
-
-        <div class="accordion-item">
-            <button data-target="content-6">
-                <span class="button-text">Cuadernos de Lingüística de El Colegio de México</span>
-                <span class="content-number"><?= $numTopics[5] ?? '0' ?></span>
-                <i class="fa fa-chevron-down"></i>
-            </button>
-        </div>
-
-
-        <div class="accordion-item">
-            <button data-target="content-7">
-                <span class="button-text">Nueva Revista de Filología Hispánica</span>
-                <span class="content-number"><?= $numTopics[6] ?? '0' ?></span>
-                <i class="fa fa-chevron-down"></i>
-            </button>
-        </div>
-
-        <div class="accordion-item">
-            <button data-target="content-8">
-                <span class="button-text">Revista Interdisciplinaria de Estudios de Género de El Colegio de México</span>
-                <span class="content-number"><?= $numTopics[7] ?? '0' ?></span>
-                <i class="fa fa-chevron-down"></i>
-            </button>
-        </div>
-
-        <div class="accordion-item">
-            <button data-target="content-9">
-                <span class="button-text">Revista Estudios Económicos de El Colegio de México</span>
-                <span class="content-number"><?= $numTopics[8] ?? '0' ?></span>
-                <i class="fa fa-chevron-down"></i>
-            </button>
-        </div>
-    </div>
-
-    <!-- Contenido -->
-    <div id="content-1" class="accordion-content">
-        <?php if (!empty($categoryList[0])): ?>
-            <ul class="category-list">
-                <?php foreach ($categoryList[0] as $category): ?>
-                <li > 
-                    <span class="category-name"><?= htmlspecialchars($category) ?></span>
-                    <img src="<?=$this->imageLink('public/check.png')?>" alt="Icono" class="category-icon">
-                </li>
-                <?php endforeach; ?>
-            </ul>
-        <?php else: ?>
-            <p>No hay temas disponibles.</p>
-        <?php endif; ?>
-    </div>
-    <div id="content-2" class="accordion-content">
-    <?php if (!empty($categoryList[1])): ?>
-            <ul class="category-list">
-                <?php foreach ($categoryList[1] as $category): ?>
-                <li > 
-                    <span class="category-name"><?= htmlspecialchars($category) ?></span>
-                    <img src="<?=$this->imageLink('public/check.png')?>" alt="Icono" class="category-icon">
-                </li>
-                <?php endforeach; ?>
-            </ul>
-        <?php else: ?>
-            <p>No hay temas disponibles.</p>
-        <?php endif; ?>
-    </div>
-    <div id="content-3" class="accordion-content">
-    <?php if (!empty($categoryList[2])): ?>
-            <ul class="category-list">
-                <?php foreach ($categoryList[2] as $category): ?>
-                <li > 
-                    <span class="category-name"><?= htmlspecialchars($category) ?></span>
-                    <img src="<?=$this->imageLink('public/check.png')?>" alt="Icono" class="category-icon">
-                </li>
-                <?php endforeach; ?>
-            </ul>
-        <?php else: ?>
-            <p>No hay temas disponibles.</p>
-        <?php endif; ?>
-    </div>
-    <div id="content-4" class="accordion-content">
-    <?php if (!empty($categoryList[3])): ?>
-            <ul class="category-list">
-                <?php foreach ($categoryList[3] as $category): ?>
-                <li > 
-                    <span class="category-name"><?= htmlspecialchars($category) ?></span>
-                    <img src="<?=$this->imageLink('public/check.png')?>" alt="Icono" class="category-icon">
-                </li>
-                <?php endforeach; ?>
-            </ul>
-        <?php else: ?>
-            <p>No hay temas disponibles.</p>
-        <?php endif; ?>
-    </div>
-    <div id="content-5" class="accordion-content">
-    <?php if (!empty($categoryList[4])): ?>
-            <ul class="category-list">
-                <?php foreach ($categoryList[4] as $category): ?>
-                <li > 
-                    <span class="category-name"><?= htmlspecialchars($category) ?></span>
-                    <img src="<?=$this->imageLink('public/check.png')?>" alt="Icono" class="category-icon">
-                </li>
-                <?php endforeach; ?>
-            </ul>
-        <?php else: ?>
-            <p>No hay temas disponibles.</p>
-        <?php endif; ?>
-    </div>
-    <div id="content-6" class="accordion-content">
-    <?php if (!empty($categoryList[5])): ?>
-            <ul class="category-list">
-                <?php foreach ($categoryList[5] as $category): ?>
-                <li > 
-                    <span class="category-name"><?= htmlspecialchars($category) ?></span>
-                    <img src="<?=$this->imageLink('public/check.png')?>" alt="Icono" class="category-icon">
-                </li>
-                <?php endforeach; ?>
-            </ul>
-        <?php else: ?>
-            <p>No hay temas disponibles.</p>
-        <?php endif; ?>
-    </div>
-    <div id="content-7" class="accordion-content">
-    <?php if (!empty($categoryList[6])): ?>
-            <ul class="category-list">
-                <?php foreach ($categoryList[6] as $category): ?>
-                <li > 
-                    <span class="category-name"><?= htmlspecialchars($category) ?></span>
-                    <img src="<?=$this->imageLink('public/check.png')?>" alt="Icono" class="category-icon">
-                </li>
-                <?php endforeach; ?>
-            </ul>
-        <?php else: ?>
-            <p>No hay temas disponibles.</p>
-        <?php endif; ?>
-    </div>
-    <div id="content-8" class="accordion-content">
-    <?php if (!empty($categoryList[7])): ?>
-            <ul class="category-list">
-                <?php foreach ($categoryList[7] as $category): ?>
-                <li > 
-                    <span class="category-name"><?= htmlspecialchars($category) ?></span>
-                    <img src="<?=$this->imageLink('public/check.png')?>" alt="Icono" class="category-icon">
-                </li>
-                <?php endforeach; ?>
-            </ul>
-        <?php else: ?>
-            <p>No hay temas disponibles.</p>
-        <?php endif; ?>
-    </div>
-    <div id="content-9" class="accordion-content">
-    <?php if (!empty($categoryList[8])): ?>
-            <ul class="category-list">
-                <?php foreach ($categoryList[8] as $category): ?>
-                <li > 
-                    <span class="category-name"><?= htmlspecialchars($category) ?></span>
-                    <img src="<?=$this->imageLink('public/check.png')?>" alt="Icono" class="category-icon">
-                </li>
-                <?php endforeach; ?>
-            </ul>
-        <?php else: ?>
-            <p>No hay temas disponibles.</p>
-        <?php endif; ?>
-    </div>
+    <?php endforeach; ?>
 </div>
-
-<script>
-
-</script>
-</body>
-</html>
