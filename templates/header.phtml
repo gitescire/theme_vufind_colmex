@@ -40,7 +40,7 @@
             <a href="<?=$this->url('content-page', ['page' => 'statistics']) ?>">Estadísticas</a>
           </li>
           <li>
-            <a href="<?=$this->url('content-page', ['page' => 'search']) ?>"><?=$this->transEsc('Search')?></a>
+            <a href="<?=$this->url('home')?>Search/Results?lookfor=&type=AllFields"><?=$this->transEsc('Search')?></a>
           </li>
           
           <?php if ($this->feedback()->tabEnabled()): ?>
