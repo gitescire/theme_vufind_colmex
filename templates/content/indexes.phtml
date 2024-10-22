@@ -25,7 +25,7 @@ function fetch_data($url) {
     return ['numTopics' => $numTopics, 'categoryList' => $categoryList];
 }
 
-$url = "http://localhost:8983/solr/biblio/select?fl=index_str_mv&fq=institution%3A%20Estudios%20Econ%C3%B3micos&indent=true&q.op=OR&q=*%3A*&useParams=";
+$url = "http://localhost:8952/solr/biblio/select?fl=index_str_mv&fq=institution%3A%20Estudios%20Econ%C3%B3micos&indent=true&q.op=OR&q=*%3A*&useParams=";
 
 $data = fetch_data($url);
 $numTopics = $data['numTopics'];
