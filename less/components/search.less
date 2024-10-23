@@ -176,14 +176,6 @@ header .container.navbar { margin-bottom: 0; }
   padding-top: 1rem;
 
   .record-checkbox,
-  .record-number { display: none; }
-
-  .title,
-  .result-author,
-  .fulltext {
-    display: inline-block;
-  }
-
   .title {
     font-weight: bold;
   }
@@ -204,7 +196,7 @@ header .container.navbar { margin-bottom: 0; }
   @media (max-width: 767px) {
     a {
       max-width: 100%;
-      text-decoration: underline;
+      text-decoration: none;
     }
   }
   @media (min-width: 768px) {
@@ -217,6 +209,7 @@ header .container.navbar { margin-bottom: 0; }
       display: block;
       flex: 0 2rem;
       text-align: center;
+      left: 90%;
     }
   }
 }
@@ -241,7 +234,7 @@ header .container.navbar { margin-bottom: 0; }
       max-width: 100%;
       text-align: center;
       white-space: nowrap;
-      text-decoration: underline;
+      text-decoration: none;
     }
     .rating-summary a {
       white-space: normal;
@@ -329,7 +322,8 @@ header .container.navbar { margin-bottom: 0; }
   }
   .result-links {
     float: right;
-    width: 10%;
+    display: flex;
+    margin-top:25%;
     padding: 0;
   }
   .savedLists.loaded { display: block; }

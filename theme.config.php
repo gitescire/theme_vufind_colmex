@@ -332,6 +332,7 @@ return [
             'view-list' => 'FontAwesome:list',
             'view-visual' => 'FontAwesome:th-large',
             'warning' => 'FontAwesome:exclamation-triangle',
+            
         ],
     ],
     'doctype' => 'HTML5',

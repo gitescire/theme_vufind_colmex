@@ -115,10 +115,7 @@
         </div>
       <?php endif; ?>
 
-      <?php if ($this->driver->tryMethod('getWorkKeys') && $this->searchOptions($this->driver->getSourceIdentifier())->getVersionsAction()): ?>
-        <div class="record-versions ajax"></div>
-      <?php endif; ?>
-
+     
       <div class="callnumAndLocation ajax-availability hidden">
         <?php if ($this->driver->supportsAjaxStatus()): ?>
           <strong class="hideIfDetailed"><?=$this->transEsc('Call Number')?>:</strong>
@@ -156,6 +153,7 @@
           <?=$this->record($this->driver)->renderTemplate('data-citations.phtml', ['data' => $links])?>
         </div>
       <?php endif; ?>
+      
 
       <div class="result-formats">
         <?=$this->record($this->driver)->getFormatList() ?>
@@ -168,6 +166,10 @@
         <?php endif; ?>
       </div>
 
+      <?php if ($this->driver->tryMethod('getWorkKeys') && $this->searchOptions($this->driver->getSourceIdentifier())->getVersionsAction()): ?>
+        <div class="record-versions ajax"></div>
+      <?php endif; ?>
+
       <?php if ($openUrlActive || $doiActive || !empty($urls)): ?>
         <?php if ($openUrlActive): ?>
           <br>
@@ -179,12 +181,7 @@
         <?php endif; ?>
         <?php $urls = is_array($urls) ? $urls : []; ?>
         <?php if (!$this->driver->isCollection()): ?>
-          <?php foreach ($urls as $current): ?>
-              <a class="fulltext icon-link" href="<?=$this->escapeHtmlAttr($this->proxyUrl($current['url']))?>" target="new">
-                <?=$this->icon('external-link', 'icon-link__icon') ?>
-                <span class="icon-link__label"><?=($current['url'] == $current['desc']) ? $this->transEsc('Get full text') : $this->escapeHtml($current['desc'])?></span>
-              </a><br>
-          <?php endforeach; ?>
+         
         <?php endif; ?>
       <?php endif; ?>
       <?php if ($this->userlist()->getMode() !== 'disabled'): ?>
@@ -203,16 +200,19 @@
       </div>
     </div>
     <div class="result-links hidden-print">
+      
+      
+    <?php foreach ($urls as $current): ?>
+              <a class="fulltext icon-link" href="<?=$this->escapeHtmlAttr($this->proxyUrl($current['url']))?>" target="new">
+                <?=$this->icon('external-link', 'icon-link__icon') ?>
+                <span class="icon-link__label"></span>
+              </a><br>
+          <?php endforeach; ?>
       <?=$this->record($this->driver)->renderTemplate('controls/qrcode.phtml', ['driver' => $this->driver, 'context' => 'results'])?>
       <?php /* Add to favorites */ ?>
-      <a href="<?=$this->escapeHtmlAttr($recordLinker->getActionUrl($this->driver, 'Save'))?>" data-lightbox class="save-record result-link_button icon-link" data-id="<?=$this->escapeHtmlAttr($this->driver->getUniqueId()) ?>">
-      <i class="fa fa-star-o" aria-hidden="true"></i>      
-          </a><br>
       <?php if ($this->cart()->isActiveInSearch() && isset($this->params) && $this->params->getOptions()->supportsCart() && $this->cart()->isActive()): ?>
         <?=$this->render('record/cart-buttons.phtml', ['id' => $this->driver->getUniqueId(), 'source' => $this->driver->getSourceIdentifier()]); ?><br>
       <?php endif; ?>
-
-
 
       <?php /* Hierarchy tree link */ ?>
       <?php $trees = $this->driver->tryMethod('getHierarchyTrees'); ?>
