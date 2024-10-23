@@ -258,12 +258,11 @@ body{
 
         }
        
-        .icon-link, .icon-link__label, .result-link{
-            background: #977f63;
+        .icon-link, .result-link{
+            background: #1C5F74;
             padding: 2px 6px;
             text-decoration: none;
             color: #fff;
-            margin: 5px;
             display: inline;
 
             .result-link_button{
@@ -273,28 +272,49 @@ body{
                 color: #00836e;
                 border: 1px solid;
                 padding: 2px 6px;
-                border-radius: 50%;
+                border-radius: 20px;
                 margin: 10px;
     
             }
+
             
         } 
         
     }   
 }
 
+.result-formats{
+
+        .online{
+        background-color: #b99b6b;
+        }
+}
+
+
+
+.icon-link__labels{
+    text-decoration: none;
+    font-size: 14px;
+    align-content: center;
+}
+
+.icon-link__label{
+    text-decoration: none;
+    font-size: 14px;
+    align-content: center;
+}
+
 .result-links{
-    float: right;
-    width: 10%;
-    height: 15%;
+    
     a{
             text-align: right;
             font-size: 17px;
             color: #977f63;
             border: 2px solid;
             padding: 4px 6px;
-            border-radius: 50%;
+            border-radius: 20px;
             margin: 10px;
+            margin-bottom: 25px;
     
     }
 }
@@ -724,9 +744,6 @@ footer{
             }
         }
 
-        .result-links{
-            width: 15%;
-        }
 }
 
 @media (max-width: 480px) {
@@ -812,6 +829,33 @@ footer{
         padding: 8px 10px;
     }
     }
+
+        .result-links {
+          float: right;
+          display: flex;
+          padding: 0;;
+
+        }
+
+        .record .media-left, .result .media-left {
+            margin-right: 10px;
+            display: none;
+            margin-left: 15px;
+        }
+
+        .record-number{
+            width: 24px;
+        }
+      
+}
+
+@media (minS-width: 1200px) {
+    .result-links {
+        float: right;
+        display: flex;
+        margin-top:33%;
+        padding: 0;
+      }
 }
 
 @media (max-width: 768px) {
